@@ -2,12 +2,15 @@
 Base parser class for job description extraction.
 """
 import re
+import csv
+import os
 from abc import ABC, abstractmethod
 from typing import List, Optional, Dict, Any
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import logging
+from pathlib import Path
 
 from ..models.job import JDModel
 
@@ -36,6 +39,9 @@ class BaseParser(ABC):
             except Exception as e:
                 logger.warning(f"Failed to initialize LLM parser: {str(e)}. Falling back to traditional parsing.")
                 self.llm_parser = None
+        
+        # Load tools from CSV file
+        self._load_tools_from_csv()
         
         self.session = requests.Session()
         self.session.headers.update({
@@ -75,10 +81,90 @@ class BaseParser(ABC):
         """
         pass
     
+    def _load_tools_from_csv(self):
+        """
+        Load tools from CSV file and prepare them for skill extraction.
+        """
+        self.tools_list = []
+        self.tools_pattern = None
+        
+        # Find CSV file path
+        csv_path = Path(__file__).parent.parent.parent / "data" / "tools.csv"
+        
+        try:
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    tool = row.get('tool', '').strip()
+                    if tool:
+                        self.tools_list.append(tool)
+            
+            # Sort by length (longest first) to prioritize longer matches
+            self.tools_list.sort(key=len, reverse=True)
+            
+            # Create regex pattern for all tools
+            self._create_tools_pattern()
+            
+            logger.info(f"Loaded {len(self.tools_list)} tools from CSV file")
+            
+        except FileNotFoundError:
+            logger.warning(f"Tools CSV file not found at {csv_path}. Using fallback patterns.")
+            self._use_fallback_patterns()
+        except Exception as e:
+            logger.error(f"Error loading tools from CSV: {str(e)}. Using fallback patterns.")
+            self._use_fallback_patterns()
+    
+    def _create_tools_pattern(self):
+        """
+        Create a compiled regex pattern from the tools list.
+        """
+        if not self.tools_list:
+            return
+        
+        # Escape special regex characters in tool names
+        escaped_tools = []
+        for tool in self.tools_list:
+            # Handle special cases
+            escaped_tool = re.escape(tool)
+            # Fix some common escaping issues
+            escaped_tool = escaped_tool.replace(r'\+', r'\+')
+            escaped_tool = escaped_tool.replace(r'\#', r'#')
+            escaped_tool = escaped_tool.replace(r'\.', r'\.')
+            escaped_tools.append(escaped_tool)
+        
+        # Create pattern with word boundaries
+        pattern = r'\b(' + '|'.join(escaped_tools) + r')\b'
+        
+        try:
+            self.tools_pattern = re.compile(pattern, re.IGNORECASE)
+        except re.error as e:
+            logger.error(f"Error compiling regex pattern: {str(e)}. Using fallback.")
+            self._use_fallback_patterns()
+    
+    def _use_fallback_patterns(self):
+        """
+        Use hardcoded fallback patterns when CSV loading fails.
+        """
+        self.tools_list = [
+            # Programming languages
+            'Python', 'Java', 'JavaScript', 'TypeScript', 'C++', 'C#', 'Go', 'Rust', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Scala', 'R',
+            # Web frameworks
+            'React', 'Angular', 'Vue', 'Django', 'Flask', 'Spring', 'Rails', 'Express', 'FastAPI', 'Next.js', 'Nuxt',
+            # Databases
+            'SQL', 'NoSQL', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Elasticsearch', 'Cassandra', 'DynamoDB',
+            # Cloud platforms
+            'AWS', 'Azure', 'GCP', 'Google Cloud', 'Kubernetes', 'Docker', 'CI/CD', 'DevOps',
+            # Data/ML
+            'Machine Learning', 'Deep Learning', 'TensorFlow', 'PyTorch', 'Pandas', 'NumPy', 'Spark', 'Hadoop',
+            # Other technical terms
+            'REST', 'GraphQL', 'Microservices', 'API', 'Git', 'Linux', 'Agile', 'Scrum'
+        ]
+        self.tools_list.sort(key=len, reverse=True)
+        self._create_tools_pattern()
+    
     def extract_skills(self, text: str) -> List[str]:
         """
-        Extract technical skills and keywords from text.
-        This is a basic implementation that can be overridden or enhanced with LLM.
+        Extract technical skills and keywords from text using CSV-based tool list.
         
         Args:
             text: Job description text
@@ -86,26 +172,21 @@ class BaseParser(ABC):
         Returns:
             List of extracted skills/keywords
         """
-        # Common technical skills and keywords patterns
-        skill_patterns = [
-            # Programming languages
-            r'\b(Python|Java|JavaScript|TypeScript|C\+\+|C#|Go|Rust|Ruby|PHP|Swift|Kotlin|Scala|R)\b',
-            # Web frameworks
-            r'\b(React|Angular|Vue|Django|Flask|Spring|Rails|Express|FastAPI|Next\.js|Nuxt)\b',
-            # Databases
-            r'\b(SQL|NoSQL|PostgreSQL|MySQL|MongoDB|Redis|Elasticsearch|Cassandra|DynamoDB)\b',
-            # Cloud platforms
-            r'\b(AWS|Azure|GCP|Google Cloud|Kubernetes|Docker|CI/CD|DevOps)\b',
-            # Data/ML
-            r'\b(Machine Learning|Deep Learning|TensorFlow|PyTorch|Pandas|NumPy|Spark|Hadoop)\b',
-            # Other technical terms
-            r'\b(REST|GraphQL|Microservices|API|Git|Linux|Agile|Scrum)\b',
-        ]
+        if not text:
+            return []
         
         skills = set()
-        for pattern in skill_patterns:
-            matches = re.findall(pattern, text, re.IGNORECASE)
-            skills.update(match.lower() for match in matches)
+        
+        # Use CSV-based pattern if available
+        if self.tools_pattern:
+            matches = self.tools_pattern.findall(text)
+            # Preserve original case from the tools list
+            for match in matches:
+                # Find the original tool name with correct case
+                for tool in self.tools_list:
+                    if tool.lower() == match.lower():
+                        skills.add(tool)
+                        break
         
         # Also extract years of experience requirements
         exp_pattern = r'(\d+)\+?\s*years?\s*(?:of\s*)?experience'
