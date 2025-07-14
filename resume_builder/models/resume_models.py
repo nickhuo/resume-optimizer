@@ -57,6 +57,7 @@ class ResumeData(BaseModel):
     # Metadata
     target_role: Optional[str] = None
     footnote: Optional[str] = None
+    hidden_text: Optional[str] = None  # Hidden skills text for ATS optimization
 
 
 class OptimizationRequest(BaseModel):

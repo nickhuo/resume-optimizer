@@ -518,7 +518,8 @@ def _load_default_resume() -> ResumeData:
             "Frameworks": ["React", "Next.js", "Jenkins", "Tailwind CSS", "Vite", "Node.js", "Django", "Express.js", "MongoDB", "Redis"],
             "DevOps": ["AWS", "Docker", "Terraform", "GitHub Actions", "Vercel", "Airflow", "Linux/Unix", "Git"]
         },
-        footnote="Actively seeking Fall 2025 intern opportunities. Willing to relocate. Authorized to work in the US"
+        footnote="Actively seeking Fall 2025 intern opportunities. Willing to relocate. Authorized to work in the US",
+        hidden_text=None  # Will be populated during optimization
     )
 
 

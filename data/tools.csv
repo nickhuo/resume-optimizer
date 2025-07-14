@@ -1,0 +1,600 @@
+tool
+Python
+JavaScript
+SQL
+Java
+C#
+C++
+HTML
+CSS
+R
+Swift
+Kotlin
+PHP
+Ruby
+TypeScript
+MATLAB
+SAS
+Shell Scripting
+PowerShell
+Visual Basic
+Go
+Rust
+Dart
+Scala
+Groovy
+Objective-C
+Perl
+Haskell
+VBA
+Julia
+COBOL
+Fortran
+ASP.NET
+Node.js
+React
+Angular
+Vue.js
+Django
+Flask
+Ruby on Rails
+Laravel
+Spring
+ASP.NET Core
+jQuery
+Bootstrap
+WordPress
+Drupal
+Joomla
+Magento
+TensorFlow
+PyTorch
+Keras
+Scikit-Learn
+XGBoost
+LightGBM
+CatBoost
+Tableau
+Power BI
+QlikView
+Alteryx
+Microsoft Excel
+Microsoft Access
+SAP
+Oracle ERP
+NetSuite
+QuickBooks
+Sage
+Xero
+Tally ERP
+Microsoft Dynamics 365
+Salesforce
+Zoho CRM
+HubSpot CRM
+Trello
+Asana
+JIRA
+Confluence
+Git
+GitHub
+GitLab
+Bitbucket
+SVN
+Mercurial
+Jenkins
+CircleCI
+Travis CI
+Docker
+Kubernetes
+OpenShift
+AWS
+Microsoft Azure
+Google Cloud Platform
+IBM Cloud
+Oracle Cloud
+Salesforce Cloud
+Alibaba Cloud
+DigitalOcean
+Heroku
+Vagrant
+Ansible
+Puppet
+Chef
+Terraform
+SaltStack
+Nagios
+Zabbix
+Splunk
+Elasticsearch
+Kibana
+Logstash
+Grafana
+Prometheus
+New Relic
+Datadog
+Slack
+Microsoft Teams
+Zoom
+WebEx
+Google Meet
+Notion
+Evernote
+OneNote
+ServiceNow
+Freshdesk
+Zendesk
+Remedy
+HP Service Manager
+ITIL
+Agile
+Scrum
+Kanban
+DevOps
+CI/CD
+ITSM
+TOGAF
+COBIT
+Lean
+Six Sigma
+Prince2
+PMP
+PMBOK
+CAPM
+CISA
+CISM
+CISSP
+CEH
+CompTIA Security+
+CompTIA Network+
+CompTIA A+
+Microsoft Certified: Azure Fundamentals
+AWS Certified Cloud Practitioner
+Google Cloud Certified - Associate Cloud Engineer
+Cisco CCNA
+Cisco CCNP
+Cisco CCIE
+Red Hat Certified Engineer
+VMware Certified Professional
+Citrix Certified Professional
+Salesforce Certified Administrator
+Certified ScrumMaster
+Certified Agile Coach
+Microsoft 365
+Windows Server
+Linux
+Unix
+macOS
+Android
+iOS
+React Native
+Xamarin
+Flutter
+Apache Hadoop
+Apache Spark
+Apache Kafka
+Apache Hive
+Apache Pig
+Apache HBase
+Apache Cassandra
+MongoDB
+Redis
+CouchDB
+MariaDB
+MySQL
+PostgreSQL
+SQLite
+DynamoDB
+Amazon RDS
+Google BigQuery
+Snowflake
+Azure SQL Database
+Azure Cosmos DB
+IBM Db2
+Teradata
+Oracle Database
+SQL Server
+Data Warehousing
+Data Modeling
+ETL
+Data Integration
+Data Governance
+Data Quality
+Data Visualization
+Data Analysis
+Data Mining
+Machine Learning
+Deep Learning
+Artificial Intelligence
+Natural Language Processing
+Computer Vision
+Big Data
+Business Intelligence
+Predictive Analytics
+Descriptive Analytics
+Prescriptive Analytics
+Web Development
+Mobile Development
+Full Stack Development
+Backend Development
+Frontend Development
+Software Development
+Software Engineering
+Database Administration
+Network Administration
+Systems Administration
+Cloud Administration
+Cybersecurity
+Information Security
+Ethical Hacking
+Penetration Testing
+Digital Forensics
+Risk Management
+Compliance
+Audit
+Financial Analysis
+Financial Modeling
+Financial Reporting
+Accounting
+Taxation
+Cost Accounting
+Managerial Accounting
+Payroll
+Budgeting
+Forecasting
+Financial Planning
+Investment Banking
+Asset Management
+Wealth Management
+Risk Assessment
+Credit Analysis
+Loan Processing
+Fraud Detection
+Anti-Money Laundering
+Know Your Customer (KYC)
+Regulatory Reporting
+Market Analysis
+Competitive Analysis
+Product Management
+Product Design
+Product Marketing
+Digital Marketing
+Content Marketing
+Social Media Marketing
+Search Engine Optimization (SEO)
+Pay-Per-Click (PPC)
+Email Marketing
+Affiliate Marketing
+Brand Management
+Customer Relationship Management (CRM)
+User Experience (UX) Design
+User Interface (UI) Design
+Graphic Design
+Video Editing
+Copywriting
+Content Creation
+Technical Writing
+Project Management
+Change Management
+Business Analysis
+Business Process Management
+Supply Chain Management
+Procurement
+Inventory Management
+Logistics
+Human Resources
+Talent Management
+Recruiting
+Employee Relations
+Compensation and Benefits
+Training and Development
+Performance Management
+Organizational Development
+Leadership Development
+Sales
+Business Development
+Negotiation
+Account Management
+Customer Success
+Customer Support
+Technical Support
+Quality Assurance
+Testing
+Automated Testing
+Manual Testing
+Software Testing
+Load Testing
+Performance Testing
+Security Testing
+Usability Testing
+Unit Testing
+Integration Testing
+System Testing
+Acceptance Testing
+Regression Testing
+Functional Testing
+Non-Functional Testing
+Test Automation
+Selenium
+Appium
+JMeter
+LoadRunner
+Postman
+SoapUI
+Charles Proxy
+Fiddler
+Burp Suite
+OWASP ZAP
+Wireshark
+Nmap
+Metasploit
+Kali Linux
+Nessus
+Qualys
+Fortinet
+Palo Alto Networks
+Cisco ASA
+Check Point
+Juniper
+SonicWall
+FireEye
+Symantec
+McAfee
+Trend Micro
+IBM QRadar
+Splunk Security
+CrowdStrike
+Carbon Black
+Cylance
+Microsoft Defender
+Azure Sentinel
+AWS Security Hub
+Google Chronicle
+Okta
+Ping Identity
+RSA SecurID
+Duo Security
+SecureAuth
+IAM
+Single Sign-On (SSO)
+Multi-Factor Authentication (MFA)
+Public Key Infrastructure (PKI)
+Encryption
+Decryption
+Cryptography
+Blockchain
+Smart Contracts
+Ethereum
+Bitcoin
+Hyperledger
+Solana
+Binance Smart Chain
+Cardano
+Polkadot
+NFT
+Decentralized Finance (DeFi)
+FinTech
+InsurTech
+RegTech
+LegalTech
+HealthTech
+EduTech
+IoT
+Internet of Things
+Edge Computing
+5G
+Robotics
+Automation
+Process Automation
+Industrial Automation
+Robotic Process Automation (RPA)
+Blue Prism
+UiPath
+Automation Anywhere
+Microsoft Power Automate
+Pega
+Bizagi
+Oracle BPM
+SAP BPM
+IBM BPM
+Apache NiFi
+MuleSoft
+Dell Boomi
+Informatica
+Talend
+SnapLogic
+Adeptia
+Jitterbit
+Software Architecture
+Microservices
+REST APIs
+GraphQL
+SOAP APIs
+API Management
+API Gateway
+Enterprise Architecture
+Solution Architecture
+Cloud Architecture
+Data Architecture
+Security Architecture
+DevSecOps
+Site Reliability Engineering (SRE)
+Observability
+Monitoring
+Logging
+Alerting
+Incident Management
+Root Cause Analysis
+Postmortems
+Continuous Integration
+Continuous Deployment
+Version Control
+Code Review
+Code Quality
+Technical Debt
+Refactoring
+Design Patterns
+Object-Oriented Programming (OOP)
+Functional Programming
+Event-Driven Architecture
+Distributed Systems
+Parallel Computing
+High-Performance Computing
+Grid Computing
+Cluster Computing
+Serverless Computing
+Function as a Service (FaaS)
+Platform as a Service (PaaS)
+Infrastructure as a Service(IaaS)
+Software as a Service (SaaS)
+Containers
+Container Orchestration
+Virtualization
+Hyper-V
+VMware vSphere
+VMware ESXi
+KVM
+Xen
+Citrix Hypervisor
+OpenStack
+CloudFormation
+Terraform
+ARM Templates
+Bicep
+Helm
+Kubernetes Operators
+Prometheus
+Grafana
+Loki
+Thanos
+Jaeger
+Zipkin
+OpenTelemetry
+Service Mesh
+Istio
+Linkerd
+Consul
+Envoy
+API Management
+API Security
+Web Application Firewall (WAF)
+Content Delivery Network (CDN)
+Cloudflare
+Akamai
+Fastly
+Amazon CloudFront
+Azure Front Door
+Google Cloud CDN
+HTTP/2
+HTTP/3
+SSL/TLS
+Certificate Management
+ACME
+Let’s Encrypt
+Secure Sockets Layer (SSL)
+Transport Layer Security (TLS)
+DNS
+DNSSEC
+BIND
+Amazon Route 53
+Azure DNS
+Google Cloud DNS
+Dynamic DNS
+IP Address Management
+DHCP
+Network Address Translation (NAT)
+VPN
+IPSec
+SSL VPN
+OpenVPN
+WireGuard
+L2TP
+PPTP
+Remote Desktop Protocol (RDP)
+Virtual Network Computing (VNC)
+SSH
+Telnet
+FTP
+SFTP
+FTPS
+SCP
+SMB
+CIFS
+NFS
+WebDAV
+iSCSI
+Fiber Channel
+SAN
+NAS
+RAID
+Load Balancing
+F5 BIG-IP
+HAProxy
+NGINX
+Apache HTTP Server
+Tomcat
+Jetty
+WebSphere
+WebLogic
+IIS
+SSL Offloading
+Reverse Proxy
+Forward Proxy
+Network Intrusion Detection System (NIDS)
+Host Intrusion Detection System (HIDS)
+Intrusion Prevention System (IPS)
+Security Information and Event Management (SIEM)
+Security Operations Center (SOC)
+Managed Security Service Provider (MSSP)
+Threat Intelligence
+Cyber Threat Hunting
+Malware Analysis
+Reverse Engineering
+Vulnerability Management
+Penetration Testing Tools
+Risk Assessment
+Security Auditing
+Compliance Management
+GDPR
+HIPAA
+PCI DSS
+SOC 2
+ISO 27001
+NIST
+FISMA
+FedRAMP
+GRC
+DLP
+Data Masking
+Data Anonymization
+Data Encryption
+Database Security
+Application Security
+Secure Code Review
+Security Testing
+Dynamic Application Security Testing (DAST)
+Static Application Security Testing (SAST)
+Interactive Application Security Testing (IAST)
+Runtime Application Self-Protection (RASP)
+Cloud Security
+Cloud Security Posture Management (CSPM)
+Cloud Access Security Broker (CASB)
+Security as a Service (SECaaS)
+Zero Trust
+Least Privilege
+Secure DevOps
+Secure SDLC
+Threat Modeling
+Data Classification
+Security Awareness Training
+Phishing Simulation
+Insider Threat Detection
+Identity and Access Management (IAM)
+Privileged Access Management (PAM)
+Directory Services
+Active Directory
+Azure Active Directory
+LDAP
+RADIUS
+SAML
+OpenID Connect
+OAuth

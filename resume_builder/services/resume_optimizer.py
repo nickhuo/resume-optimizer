@@ -83,14 +83,21 @@ class ResumeOptimizer:
                 keyword_matches
             )
             
-            # 6. Calculate relevance score
+            # 6. Generate hidden text for ATS optimization
+            optimized_resume = self._generate_hidden_text(
+                optimized_resume,
+                request.job_skills,
+                keyword_matches
+            )
+            
+            # 7. Calculate relevance score
             relevance_score = self._calculate_relevance_score(
                 keyword_matches,
                 request.job_skills,
                 request.job_requirements
             )
             
-            # 7. Create optimization report
+            # 8. Create optimization report
             optimization_report = {
                 "matched_skills": list(keyword_matches.keys()),
                 "missing_skills": [skill for skill in request.job_skills if skill.lower() not in keyword_matches],
@@ -401,4 +408,65 @@ Return a JSON object with the optimized bullets:
                 aligned_reqs += 1
         
         return round(aligned_reqs / max(len(requirements), 1), 2)
+    
+    def _generate_hidden_text(
+        self,
+        resume: ResumeData,
+        job_skills: List[str],
+        keyword_matches: Dict[str, int]
+    ) -> ResumeData:
+        """Generate hidden text with skills not explicitly mentioned in the visible resume."""
+        
+        # Get all skills mentioned in the visible resume
+        visible_skills = set()
+        
+        # Skills from the skills section
+        for category, skills in resume.skills.items():
+            visible_skills.update(skill.lower() for skill in skills)
+        
+        # Skills from experience and projects
+        for exp in resume.experience:
+            visible_skills.update(tech.lower() for tech in exp.technologies)
+        
+        for proj in resume.projects:
+            visible_skills.update(tech.lower() for tech in proj.technologies)
+        
+        # Find missing skills from job requirements
+        missing_skills = []
+        for skill in job_skills:
+            skill_lower = skill.lower()
+            
+            # Check if skill is not in visible skills and not in keyword matches
+            if skill_lower not in visible_skills and skill_lower not in keyword_matches:
+                missing_skills.append(skill)
+        
+        # Generate hidden text if there are missing skills
+        if missing_skills:
+            # Limit to avoid overly long hidden text
+            hidden_skills = missing_skills[:15]  # Limit to 15 skills
+            
+            # Create a natural-sounding skills list
+            hidden_text = "Skills & Tools: " + ", ".join(hidden_skills)
+            
+            # Add some common additional skills for better ATS matching
+            additional_skills = [
+                "Git", "Linux", "Agile", "Scrum", "CI/CD", "REST APIs", 
+                "Unit Testing", "Code Review", "Problem Solving", "Communication"
+            ]
+            
+            # Add additional skills that aren't already included
+            for skill in additional_skills:
+                if skill.lower() not in [s.lower() for s in hidden_skills] and skill.lower() not in visible_skills:
+                    hidden_skills.append(skill)
+                    if len(hidden_skills) >= 20:  # Total limit
+                        break
+            
+            # Update the hidden text with all skills
+            resume.hidden_text = "Skills & Tools: " + ", ".join(hidden_skills)
+            
+            logger.info(f"Generated hidden text with {len(hidden_skills)} skills: {resume.hidden_text[:100]}...")
+        else:
+            logger.info("No missing skills found, no hidden text generated")
+        
+        return resume
 

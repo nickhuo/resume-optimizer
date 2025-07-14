@@ -1,0 +1,118 @@
+{
+  "validation_summary": {
+    "total_errors": 10,
+    "is_valid": false,
+    "validated_at": "2025-07-14T11:00:06.039452",
+    "resume_file": "../data/sample_resume.json"
+  },
+  "validation_details": {
+    "skills_errors": 3,
+    "hidden_text_errors": 1,
+    "bullet_point_errors": 5,
+    "line_count_errors": 1,
+    "calculated_total_lines": 26,
+    "expected_total_lines": 23
+  },
+  "errors": [
+    {
+      "section": "skills",
+      "field": "Programming",
+      "error_type": "character_count",
+      "actual": 67,
+      "expected": "92-97",
+      "message": "Programming has 67 characters, expected 92-97"
+    },
+    {
+      "section": "skills",
+      "field": "Frameworks",
+      "error_type": "character_count",
+      "actual": 88,
+      "expected": "92-97",
+      "message": "Frameworks has 88 characters, expected 92-97"
+    },
+    {
+      "section": "skills",
+      "field": "DevOps",
+      "error_type": "character_count",
+      "actual": 72,
+      "expected": "103-108",
+      "message": "DevOps has 72 characters, expected 103-108"
+    },
+    {
+      "section": "hidden_text",
+      "field": "footnote",
+      "error_type": "character_count",
+      "actual": 98,
+      "expected": 200,
+      "message": "Hidden text has 98 characters, expected 200"
+    },
+    {
+      "section": "experience",
+      "field": "entry_0_bullet_0",
+      "error_type": "bullet_point_length",
+      "actual": 116,
+      "expected": "≤115 or 215-230",
+      "message": "Bullet point in experience has 116 characters, expected ≤115 or 215-230",
+      "content_preview": "Engineered GPT-seeded ANN sentiment pipeline parsi..."
+    },
+    {
+      "section": "experience",
+      "field": "entry_0_bullet_2",
+      "error_type": "bullet_point_length",
+      "actual": 203,
+      "expected": "≤115 or 215-230",
+      "message": "Bullet point in experience has 203 characters, expected ≤115 or 215-230",
+      "content_preview": "Architected 18-endpoint RESTful FastAPI microservi..."
+    },
+    {
+      "section": "experience",
+      "field": "entry_1_bullet_0",
+      "error_type": "bullet_point_length",
+      "actual": 117,
+      "expected": "≤115 or 215-230",
+      "message": "Bullet point in experience has 117 characters, expected ≤115 or 215-230",
+      "content_preview": "Led the development of data governance system, dro..."
+    },
+    {
+      "section": "projects",
+      "field": "entry_0_bullet_0",
+      "error_type": "bullet_point_length",
+      "actual": 118,
+      "expected": "≤115 or 215-230",
+      "message": "Bullet point in projects has 118 characters, expected ≤115 or 215-230",
+      "content_preview": "Architected 4-service LLM platform; modular micros..."
+    },
+    {
+      "section": "projects",
+      "field": "entry_0_bullet_4",
+      "error_type": "bullet_point_length",
+      "actual": 118,
+      "expected": "≤115 or 215-230",
+      "message": "Bullet point in projects has 118 characters, expected ≤115 or 215-230",
+      "content_preview": "Integrated Opik tracing and auto-eval, detecting h..."
+    },
+    {
+      "section": "overall",
+      "field": "total_lines",
+      "error_type": "line_count",
+      "actual": 26,
+      "expected": 23,
+      "message": "Total lines in experience and projects is 26, expected 23"
+    }
+  ],
+  "fallback_required": true,
+  "execution_context": {
+    "directory_state": {
+      "pwd": "/Users/nickhuo/Documents/GitHub/semi-apply/resume_builder/cli",
+      "home": "/Users/nickhuo"
+    },
+    "operating_system": {
+      "platform": "MacOS"
+    },
+    "current_time": "2025-07-14T11:00:06.039494",
+    "shell": {
+      "name": "zsh",
+      "version": "5.9"
+    }
+  }
+}

@@ -66,4 +66,13 @@
 \renewcommand\thefootnote{\arabic{footnote}}
 <% endif %>
 
+<% if resume.hidden_text %>
+\vspace{-5pt} % Add some negative vertical space to move the footnote up slightly
+\begin{center}
+    \tiny{\textcolor{white}{
+      << resume.hidden_text | latex_escape >>
+    }}
+\end{center}
+<% endif %>
+
 \end{document}
