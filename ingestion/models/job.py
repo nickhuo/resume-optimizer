@@ -13,7 +13,7 @@ class JobRow(BaseModel):
     jd_link: Optional[HttpUrl] = Field(None, description="Job posting URL")
     company: Optional[str] = None
     title: Optional[str] = None
-    status: str = Field(default="TODO", pattern="^(TODO|Processing|Parsed|Error|Filling|Submitted|Failed)$")
+    status: str = Field(default="TODO", pattern="^(TODO|Processing|Parsed|Error|Filling|Submitted|Failed|Applied)$")
     llm_notes: Optional[str] = None
     last_error: Optional[str] = None
     my_notes: Optional[str] = None
@@ -33,6 +33,7 @@ class JDModel(BaseModel):
     location: Optional[str] = None
     requirements: List[str] = Field(default_factory=list)
     nice_to_have: List[str] = Field(default_factory=list)
+    responsibilities: List[str] = Field(default_factory=list)
     skills: List[str] = Field(default_factory=list)
     posted_date: Optional[datetime] = None
     job_type: Optional[str] = None  # SDE/AI/DS/DE

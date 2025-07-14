@@ -28,23 +28,56 @@ class NotionService:
         self.client = Client(auth=self.token)
         logger.info(f"Initialized Notion client for database: {self.database_id[:8]}...")
     
-    def fetch_jobs(self, status: str = "TODO", limit: int = 100) -> List[JobRow]:
+    def fetch_jobs(self, status: Optional[str] = None, limit: int = 100, page_id: Optional[str] = None) -> List[JobRow]:
         """
         Fetch job entries from Notion database.
         
         Args:
-            status: Filter by job status (TODO, Processing, etc.)
+            status: Filter by job status (TODO, Processing, etc.). If None, returns all records.
             limit: Maximum number of entries to fetch
+            page_id: If provided, fetch only the specific page
             
         Returns:
             List of JobRow objects
         """
         try:
-            logger.info(f"Fetching jobs with status: {status}")
+            # If page_id is provided, fetch specific page
+            if page_id:
+                logger.info(f"Fetching specific job with page_id: {page_id}")
+                try:
+                    page = self.client.pages.retrieve(page_id=page_id)
+                    job = self._parse_job_page(page)
+                    return [job] if job else []
+                except APIResponseError as e:
+                    logger.error(f"Failed to retrieve page {page_id}: {e}")
+                    return []
+            
+            logger.info(f"Fetching jobs with status: {status if status else 'all'}")
             
             # Build filter
             filter_params = {}
-            if status:
+            if status and status == "TODO":
+                # Special case: Include both TODO and empty status
+                filter_params = {
+                    "filter": {
+                        "or": [
+                            {
+                                "property": "Status",
+                                "select": {
+                                    "equals": "TODO"
+                                }
+                            },
+                            {
+                                "property": "Status",
+                                "select": {
+                                    "is_empty": True
+                                }
+                            }
+                        ]
+                    }
+                }
+            elif status:
+                # For other statuses, only match exact value
                 filter_params = {
                     "filter": {
                         "property": "Status",
@@ -55,20 +88,38 @@ class NotionService:
                 }
             
             # Query database
+            # Note: Include archived pages if needed with archived=True
             response = self.client.databases.query(
                 database_id=self.database_id,
                 page_size=min(limit, 100),
                 **filter_params
             )
             
+            # Debug: Print total results
+            logger.debug(f"Total results from Notion: {len(response.get('results', []))}")
+            
+            # If we have pagination, fetch all pages
+            all_results = response.get('results', [])
+            while response.get('has_more', False):
+                response = self.client.databases.query(
+                    database_id=self.database_id,
+                    page_size=min(limit, 100),
+                    start_cursor=response.get('next_cursor'),
+                    **filter_params
+                )
+                all_results.extend(response.get('results', []))
+                if len(all_results) >= limit:
+                    break
+            
             jobs = []
-            for page in response["results"]:
+            for page in all_results:
                 try:
                     job = self._parse_job_page(page)
                     if job:
                         jobs.append(job)
                 except Exception as e:
                     logger.error(f"Failed to parse page {page.get('id')}: {e}")
+                    logger.debug(f"Error details: {e}")
                     continue
             
             logger.info(f"Fetched {len(jobs)} jobs")
@@ -119,14 +170,6 @@ class NotionService:
                     }]
                 }
             
-            if "my_notes" in fields:
-                properties["My_Notes"] = {
-                    "rich_text": [{
-                        "type": "text",
-                        "text": {"content": str(fields["my_notes"])[:2000]}
-                    }]
-                }
-            
             # Update the page
             self.client.pages.update(
                 page_id=page_id,
@@ -151,6 +194,12 @@ class NotionService:
             # Debug: Print property names and types
             logger.debug(f"Page ID: {page['id']}")
             logger.debug(f"Properties: {list(props.keys())}")
+            
+            # Get status value for debugging
+            status_prop = props.get("Status", {})
+            status_value = status_prop.get("select", {}).get("name") if status_prop.get("select") else "None"
+            logger.debug(f"Status value: {status_value}")
+            
             for key, value in props.items():
                 logger.debug(f"  {key}: type={value.get('type', 'unknown')}")
             
@@ -190,6 +239,7 @@ class NotionService:
                 "jd_link": get_text(props.get("JD_Link", {})),
                 "company": get_text(props.get("Company", {})),
                 "title": get_text(props.get("Title", {})),
+                # If status is None or empty, treat it as TODO
                 "status": get_text(props.get("Status", {})) or "TODO",
                 "llm_notes": get_text(props.get("LLM_Notes", {})),
                 "last_error": get_text(props.get("Last_Error", {})),

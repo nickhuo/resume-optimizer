@@ -9,9 +9,14 @@ from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
 
+import json
+from pathlib import Path
+
 from .settings import Settings
 from .services.notion_service import get_notion_service
 from .utils.site_detector import detect_site, JobSite
+from .parsers.factory import ParserFactory
+from .parsers.base import ParserException
 
 # Setup logging
 logging.basicConfig(
@@ -37,7 +42,7 @@ def config():
 
 @app.command()
 def list(
-    status: str = typer.Option("TODO", help="Filter by job status"),
+    status: Optional[str] = typer.Option(None, help="Filter by job status (TODO, Processing, etc.). If not specified, shows all jobs."),
     limit: int = typer.Option(20, help="Maximum number of jobs to list")
 ):
     """List jobs from Notion database."""
@@ -46,16 +51,18 @@ def list(
         Settings.validate()
         
         # Fetch jobs
-        with console.status(f"Fetching jobs with status '{status}'..."):
+        status_msg = f"status '{status}'" if status else "all statuses"
+        with console.status(f"Fetching jobs with {status_msg}..."):
             notion = get_notion_service()
             jobs = notion.fetch_jobs(status=status, limit=limit)
         
         if not jobs:
-            rprint(f"No jobs found with status '{status}'")
+            rprint(f"No jobs found with {status_msg}")
             return
         
         # Create table
-        table = Table(title=f"Jobs with status: {status}")
+        title = f"Jobs with status: {status}" if status else "All Jobs"
+        table = Table(title=title)
         table.add_column("ID", style="cyan", no_wrap=True)
         table.add_column("Company", style="magenta")
         table.add_column("Title", style="green")
@@ -145,6 +152,162 @@ def test():
         console.print("\n[bold green]All tests passed! 🎉[/bold green]")
     else:
         console.print("\n[bold red]Some tests failed![/bold red]")
+
+
+@app.command()
+def parse(
+    url: str,
+    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file path for JSON result"),
+    pretty: bool = typer.Option(True, "--pretty/--compact", help="Pretty print JSON output")
+):
+    """Parse a job posting URL and extract structured data."""
+    try:
+        # Check if URL is supported
+        if not ParserFactory.is_supported(url):
+            site = detect_site(url)
+            rprint(f"[red]❌ No parser available for {site.value} yet[/red]")
+            raise typer.Exit(1)
+        
+        # Parse the job posting
+        with console.status(f"Parsing job posting from {url}..."):
+            parser = ParserFactory.get_parser(url)
+            jd_model = parser.parse(url)
+        
+        # Prepare JSON output
+        jd_dict = jd_model.model_dump(exclude_none=True)
+        
+        # Display results
+        rprint("\n[bold green]✅ Successfully parsed job posting![/bold green]\n")
+        
+        # Show summary
+        table = Table(title="Job Details", show_header=False)
+        table.add_column("Field", style="cyan")
+        table.add_column("Value", style="white")
+        
+        table.add_row("Company", jd_dict.get("company", "N/A"))
+        table.add_row("Title", jd_dict.get("title", "N/A"))
+        table.add_row("Location", jd_dict.get("location", "N/A"))
+        table.add_row("Job Type", jd_dict.get("job_type", "N/A"))
+        table.add_row("Requirements", str(len(jd_dict.get("requirements", []))))
+        table.add_row("Nice to Have", str(len(jd_dict.get("nice_to_have", []))))
+        table.add_row("Responsibilities", str(len(jd_dict.get("responsibilities", []))))
+        table.add_row("Skills Found", str(len(jd_dict.get("skills", []))))
+        
+        console.print(table)
+        
+        # Show extracted skills
+        if jd_dict.get("skills"):
+            rprint("\n[bold]Extracted Skills/Keywords:[/bold]")
+            for skill in jd_dict["skills"]:
+                rprint(f"  • {skill}")
+        
+        # Save to file if requested
+        if output:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            indent = 2 if pretty else None
+            output.write_text(json.dumps(jd_dict, indent=indent, ensure_ascii=False))
+            rprint(f"\n[green]💾 Saved to {output}[/green]")
+        
+    except ParserException as e:
+        rprint(f"[red]❌ Parser error: {e}[/red]")
+        raise typer.Exit(1)
+    except Exception as e:
+        rprint(f"[red]❌ Unexpected error: {e}[/red]")
+        raise typer.Exit(1)
+
+
+@app.command()
+def pull(
+    page_id: str,
+    save: bool = typer.Option(False, "--save", "-s", help="Save parsed data to file"),
+    update_notion: bool = typer.Option(True, "--update/--no-update", help="Update Notion status")
+):
+    """Pull and parse a job from Notion by page ID."""
+    try:
+        # Validate configuration
+        Settings.validate()
+        
+        # Fetch job from Notion
+        with console.status(f"Fetching job {page_id} from Notion..."):
+            notion = get_notion_service()
+            jobs = notion.fetch_jobs(page_id=page_id)
+            
+            if not jobs:
+                rprint(f"[red]❌ Job with ID {page_id} not found[/red]")
+                raise typer.Exit(1)
+            
+            job = jobs[0]
+        
+        if not job.jd_link:
+            rprint(f"[red]❌ Job has no JD link[/red]")
+            raise typer.Exit(1)
+        
+        # Update status to Processing
+        if update_notion:
+            notion.update_job(page_id, status="Processing")
+        
+        # Parse the job posting
+        url = str(job.jd_link)
+        with console.status(f"Parsing job posting from {url}..."):
+            parser = ParserFactory.get_parser(url)
+            jd_model = parser.parse(url)
+        
+        # Display results
+        rprint(f"\n[bold green]✅ Successfully parsed job from {job.company}![/bold green]\n")
+        
+        # Show summary
+        jd_dict = jd_model.model_dump(exclude_none=True)
+        table = Table(title="Parsed Job Details", show_header=False)
+        table.add_column("Field", style="cyan")
+        table.add_column("Value", style="white")
+        
+        table.add_row("Page ID", page_id[:8])
+        table.add_row("Company", jd_dict.get("company", "N/A"))
+        table.add_row("Title", jd_dict.get("title", "N/A"))
+        table.add_row("Location", jd_dict.get("location", "N/A"))
+        table.add_row("Job Type", jd_dict.get("job_type", "N/A"))
+        table.add_row("Requirements", str(len(jd_dict.get("requirements", []))))
+        table.add_row("Nice to Have", str(len(jd_dict.get("nice_to_have", []))))
+        table.add_row("Responsibilities", str(len(jd_dict.get("responsibilities", []))))
+        table.add_row("Skills Found", str(len(jd_dict.get("skills", []))))
+        
+        console.print(table)
+        
+        # Save to file if requested
+        if save:
+            # Create data directory if it doesn't exist
+            data_dir = Path("data/raw")
+            data_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Save JSON file
+            filename = f"jd_{page_id}.json"
+            filepath = data_dir / filename
+            filepath.write_text(json.dumps(jd_dict, indent=2, ensure_ascii=False))
+            rprint(f"\n[green]💾 Saved to {filepath}[/green]")
+        
+        # Update Notion status
+        if update_notion:
+            notion.update_job(page_id, status="Parsed")
+            rprint(f"\n[green]✅ Updated Notion status to 'Parsed'[/green]")
+        
+    except ParserException as e:
+        if update_notion:
+            try:
+                notion = get_notion_service()
+                notion.update_job(page_id, status="Error", last_error=str(e))
+            except:
+                pass  # Don't fail if we can't update Notion
+        rprint(f"[red]❌ Parser error: {e}[/red]")
+        raise typer.Exit(1)
+    except Exception as e:
+        if update_notion:
+            try:
+                notion = get_notion_service()
+                notion.update_job(page_id, status="Error", last_error=str(e))
+            except:
+                pass  # Don't fail if we can't update Notion
+        rprint(f"[red]❌ Unexpected error: {e}[/red]")
+        raise typer.Exit(1)
 
 
 if __name__ == "__main__":

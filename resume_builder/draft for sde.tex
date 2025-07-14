@@ -1,0 +1,240 @@
+% !TEX program = xelatex
+
+%IT'S A RESUME FOR DATA PATHWAY
+% !TEX root = relative/or/absolute/path/to/root/file.tex
+
+\documentclass{resume}
+
+\usepackage{pagecolor}
+\definecolor{mywhite}{RGB}{255,255,255}
+\pagecolor{mywhite}
+\usepackage{xcolor} % Add this line in the preamble
+\usepackage[normalem]{ulem} % Add this line for better underlining support
+\usepackage{hyperref}
+\usepackage{tikz}
+\newcommand{\linkarrow}{\tikz[baseline=-0.5ex] \draw[->, thick] (0,0) -- (0.7em,0.7em);}
+%\input{glyphtounicode}
+%\pdfgentounicode=1
+
+\begin{document}
+\pagenumbering{gobble} % suppress displaying page number
+
+
+\name{JIAJUN (NICK) HUO}
+
+\basicInfo{
+  \email{jiajunhuo726@gmail.com}
+  \textperiodcentered\ 
+  \phone{267-777-8518} 
+  \textperiodcentered\
+  \github[]{github.com/nickhuo}
+  \textperiodcentered\
+  \homepage[]{nickhuo.com}
+  }
+
+\section[EDUCATION]{EDUCATION}
+
+\datedsubsection{\textbf{University of Illinois Urbana Champaign}}{Aug 2024 - May 2026}
+
+\datedline{\textit{\textbf{Master of Science in Information Science (STEM)}}}{\textit{Urbana, IL}}
+
+\begin{itemize}
+    \item GPA 3.9/4.0 · Applied Machine Learning \& Database Systems (both A) · Program \#1 in Info Systems (U.S. News)
+
+\end{itemize}
+
+
+\datedsubsection{\textbf{Shenzhen University}}{Sep 2019 - Jun 2023}
+
+\datedline{\textit{\textbf{Bachelor of Science in  Mathematics}}}{\textit{Shenzhen}}
+
+
+\begin{itemize}
+
+\item GPA: 3.79/4.50 (Top 10\%) · Multiple scholarships · 4 ML modeling wins in supply chain, finance, and computer vision
+
+\end{itemize}
+
+
+\section[WORK EXPERIENCE]{WORK EXPERIENCE}
+
+%Mirror World Internship
+
+
+\datedsubsection{\textbf{Donut Labs}}{Jun 2025 - Aug 2025}
+
+\datedline{\textbf{\textit{Software Engineer Intern}}}{\textit{Agentic Browser Backed by Sequoia Capital}}
+
+
+\begin{itemize}
+  \item Engineered GPT-seeded ANN sentiment pipeline parsing 50 k tweets/day, slashing inference cost 19× to 0.003¢ per tweet
+  \item Implemented prompt-tagged Pinecone vector DB, labeled 82 \% tweets and cut GPT calls 80 \% with equal accuracy
+  \item Architected 18-endpoint RESTful FastAPI microservice for LLM inference \& content ops: QPS ↑3× with P95 220 ms; auto-Swagger cut frontend integration 66 \%, and Pydantic validation trimmed 4xx/5xx errors 40\%
+  \item Rolled out LangSmith observability across agent stack; engineered a closed-loop LLM evaluation harness with automated BLEU/BERTScore gates plus human adjudication, achieving 100 \% PR coverage and surfacing regressions within 24 h.
+
+
+\end{itemize}
+
+
+\datedsubsection{\textbf{Sonic SVM}}{Mar 2023 - Jul 2024}
+
+\datedline{\textbf{\textit{Software Engineer - Data Solutions}}}{\textit{Bitkraft-backed SaaS for 50+ Game Studios, \$100M valuation}}
+
+%\footnote{BITKRAFT-backed Series A startup, 1st gaming chain on Solana, serves game studios }
+
+\begin{itemize}
+  %\item \textbf{Pricing Analytics:} Developed a Pricing Model, setting benchmarks for diverse payment plans through a comparative analysis of competitor pricing.
+  \item Led the development of data governance system, drove 3 C-level strategic decisions with quant insights, report to CPO
+  \item Scaled data sources by 2x and architected ETL pipelines on GCP, ensuring 99.9\% accuracy with optimized SQL queries  
+  \item Automated API log extraction workflow from PostgreSQL to BigQuery using Airflow, reducing 43.2\% processing time
+  \item Built a Pub/Sub → Dataflow streaming pipeline, surfacing in-game KPIs to BI dashboards with <5 s latency
+  \item Launched Looker Studio dashboards consumed by 7 members; cut insight turnaround from 2 days → 30 min
+
+
+%add data warehousing to it
+
+\end{itemize}
+
+
+
+
+
+
+
+
+\section[PROJECTS]{PROJECTS}
+
+
+
+
+
+
+\datedsubsection{\textbf{ReplicaGenie} } {}
+
+
+\begin{itemize}
+  \item Architected 4-service LLM platform; modular microservices allow independent scaling, isolated failures \& fast rollouts
+  \item Automated LinkedIn/GitHub scraping via Selenium on AWS Lambda; parsed \& stored structured data in MongoDB
+  \item Built MongoDB → RabbitMQ CDC stream pushing changes to feature store in <1 s, enabling real-time personalization
+
+  \item Delivered 4-bit LoRA fine-tuning on SageMaker, trimming GPU training cost 77 \% and guaranteeing reproducibility
+
+
+  \item Integrated Opik tracing and auto-eval, detecting hallucination \& relevance and lifting LangChain-SageMaker reliability
+  \item Orchestrated 6-service Docker stack-MongoDB replica, RabbitMQ, Qdrant—delivering production-ready RAG
+
+
+\end{itemize}
+
+
+
+\datedsubsection{\textbf{BiteMatch}} {}
+
+\begin{itemize}
+    \item Led a 4-member Agile squad, grooming backlog and delivering on 2-week sprints with 100\% sprint goal hit rate
+	\item Top 10\% in course. Developed smart recipe app to personalize meal choices using React, Node.js, and MySQL %with 7+ database tables
+	\item Created RESTful API with 12+ endpoints handling user auth, recipe CRUD, video search, and review system
+  \item Reduced YouTube API calls by caching videos in DB and using a quota-aware fetch logic to avoid exceeding limits
+  \item Containerized services with Docker \& GitHub Actions; push-to-prod cycle shrank from 20 min to <5 min
+
+
+\end{itemize}
+
+
+%\datedsubsection{\textbf{MiaoDi}} {\textit{React Native, Firebase, AWS KMS, S3, Redis}}
+
+%\begin{itemize}
+  %\item Architected cross-platform note-taking app, achieving 103k+ downloads, 56k+ active users, and 380+ positive reviews
+  %\item Built cross-platform note-taking app with React Native and Firebase, optimizing user experience across devices
+  %\item Developed secure data storage system with end-to-end encryption using AWS KMS and S3, achieving 99.99\% uptime
+  %\item Implemented synchronization mechanism using Redis, improving data access across devices and reducing sync issues
+%\end{itemize}
+
+
+
+
+
+
+\section[SKILLS]{SKILLS}
+
+\begin{itemize}
+\item \textbf{Programming}: Python, TypeScript, Go, JavaScript, SQL, Zsh \& Bash, Node.js, React
+\item \textbf{Frameworks}: React, Next.js, Jenkins, Tailwind CSS, Vite, Node.js, Django, Express.js, MongoDB, Redis
+\item \textbf{DevOps }: AWS, Docker, Terraform, GitHub Actions, Vercel, Airflow, Linux/Unix, Git
+
+%\item \textbf{Frameworks}: React, Next.js, Redux, Tailwind CSS, Vite, Node.js, Django, Express.js, MongoDB, Redis
+%\item \textbf{DevOps }: AWS, Docker, Terraform, GitHub Actions, Vercel, Airflow, Linux/Unix, Git
+\end{itemize}
+
+
+
+ % \section[Summary]{\faStar \space Summary}
+
+
+\renewcommand\thefootnote{}\footnotetext{Actively seeking Fall 2025 intern opportunities. Willing to relocate. Authorized to work in the US}
+\addtocounter{footnote}{-1}
+\renewcommand\thefootnote{\arabic{footnote}} % 恢复正常编号
+ 
+
+
+%\textit{\textbf{Supply Chain Transshipment Optimization} \hfill \textit{\nth{1} Prize (Top 10\%), {Contemp. Undergrad Math Contest in Modeling}}}
+%\begin{itemize}
+  %\item Leveraged Hierarchical Clustering and Feature Engineering, reducing the supplier base by 87\% while preserving 97.21\% of supply volume, enhancing vendor management and risk control.
+
+%\end{itemize}
+
+
+
+% \datedsubsection{\textbf{Optimizing Material Ordering and Transfer Solutions Using Linear Programming Model} }{\textit{Sep 2021}}
+
+% \datedline{\textit{Provincial \nth{1} Prize (Top 10\%)}, {Contemp. Undergrad Math Contest in Modeling}}
+
+% \begin{itemize}
+%    \item Optimized supply chain strategy with a Hierarchical Clustering and Feature Engineering assessment model, reducing the supplier base by 87\% while preserving 97.21\% of supply volume, enhancing vendor management and risk control.
+    %\item Developed a supply chain capacity assessment model using \textbf{Hierarchical Clustering} and the TOPSIS method, identifying the 50 most critical suppliers from 402 candidates, which accounted for 97.21\% of total supply volume.
+    %\item Constructed \textbf{Integer Programming} model to optimize raw material ordering schemes, running multiple simulations, reducing projected supply shortfalls to 6 weeks, down from 175 weeks over 240 weeks in past strategies.
+%    \item Reduced raw material supply shortfalls by 96\% through Integer Programming model for ordering strategies.
+%\end{itemize}
+
+
+
+
+
+
+%Package: Pandas, Numpy, Jupyter
+
+
+
+
+
+
+%\datedsubsection{\textbf{Shenzhen Coconut Chicken Market Research Report} }{\textit{Feb 2022}}
+
+%\begin{itemize}
+%    \item Analyzed over 12,000 user reviews from 213 Shenzhen coconut chicken restaurants using Gephi, revealing key insights into its market prominence over traditional hotpot.
+%\end{itemize}
+
+
+
+    %\item Languages: Python (Pandas, NumPy, Scikit-learn), SQL (MySQL, PostgreSQL, NoSQL), R (Tidyverse), Scala, Java
+
+
+    % ... existing code ...
+
+
+% ... existing code ...
+
+
+
+% \vspace{-5pt} % Add some negative vertical space to move the footnote up slightly
+% \begin{center}
+%     \tiny{\textcolor{white}{
+%       Skills \& Tools: Kafka, Tableau, Power BI, Git, Docker, PostgreSQL, NoSQL, Java, AWS, Azure, Google Cloud Platform, HTML, CSS, JavaScript/Typescript, React, Next.js, Node.js, Express, MongoDB
+%     }}
+% \end{center}
+
+%% Reference
+%\newpage
+%\bibliographystyle{IEEETran}
+%\bibliography{mycite}
+\end{document}

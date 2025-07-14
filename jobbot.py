@@ -52,5 +52,10 @@ def batch(
     raise typer.Exit(1)
 
 
-if __name__ == "__main__":
+def main():
+    """Entry point for the jobbot CLI."""
     app()
+
+
+if __name__ == "__main__":
+    main()
