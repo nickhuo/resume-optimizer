@@ -158,19 +158,24 @@ def test():
 def parse(
     url: str,
     output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output file path for JSON result"),
-    pretty: bool = typer.Option(True, "--pretty/--compact", help="Pretty print JSON output")
+    pretty: bool = typer.Option(True, "--pretty/--compact", help="Pretty print JSON output"),
+    debug: bool = typer.Option(False, "--debug", help="Save extracted content to debug file")
 ):
-    """Parse a job posting URL and extract structured data."""
+    """Parse a job posting URL and extract structured data using universal parser."""
     try:
-        # Check if URL is supported
-        if not ParserFactory.is_supported(url):
-            site = detect_site(url)
-            rprint(f"[red]❌ No parser available for {site.value} yet[/red]")
-            raise typer.Exit(1)
-        
         # Parse the job posting
         with console.status(f"Parsing job posting from {url}..."):
             parser = ParserFactory.get_parser(url)
+            
+            # For debug mode, save extracted content
+            if debug:
+                html = parser.fetch_page(url)
+                content = parser._extract_clean_content(html)
+                
+                debug_file = Path("debug_content.txt")
+                debug_file.write_text(content, encoding='utf-8')
+                rprint(f"[blue]💾 Saved extracted content to {debug_file}[/blue]")
+            
             jd_model = parser.parse(url)
         
         # Prepare JSON output

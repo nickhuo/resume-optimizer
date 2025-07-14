@@ -1,13 +1,13 @@
 """
 Parser factory for creating appropriate parser instances.
+Now simplified to use only the universal parser.
 """
 from typing import Optional
 import logging
 
 from ..utils.site_detector import JobSite, detect_site
 from .base import BaseParser, ParserException
-from .greenhouse import GreenhouseParser
-from .workday import WorkdayParser
+from .universal_parser import UniversalParser
 
 logger = logging.getLogger(__name__)
 
@@ -15,52 +15,49 @@ logger = logging.getLogger(__name__)
 class ParserFactory:
     """Factory for creating job posting parsers."""
     
-    # Mapping of job sites to parser classes
-    PARSER_MAP = {
-        JobSite.GREENHOUSE: GreenhouseParser,
-        JobSite.WORKDAY: WorkdayParser,
-        # Additional parsers can be added here
-        # JobSite.LEVER: LeverParser,
-        # JobSite.LINKEDIN: LinkedInParser,
-    }
-    
     @classmethod
-    def get_parser(cls, url: str) -> BaseParser:
+    def get_parser(cls, url: str, use_universal: bool = True) -> BaseParser:
         """
-        Get appropriate parser for a given URL.
+        Get parser for a given URL.
+        Now always returns UniversalParser but detects site for logging.
         
         Args:
             url: Job posting URL
+            use_universal: Deprecated parameter, kept for compatibility
             
         Returns:
-            Parser instance
-            
-        Raises:
-            ParserException: If no parser available for the site
+            UniversalParser instance
         """
+        # Detect site for logging and future services
         site = detect_site(url)
         
         if site == JobSite.UNKNOWN:
-            raise ParserException(f"Unknown job site for URL: {url}")
+            logger.info(f"Unknown job site for URL: {url}, using universal parser")
+        else:
+            logger.info(f"Detected {site.value} site for URL: {url}, using universal parser")
         
-        parser_class = cls.PARSER_MAP.get(site)
+        return UniversalParser()
+    
+    @classmethod
+    def get_universal_parser(cls) -> BaseParser:
+        """
+        Get universal parser instance.
         
-        if not parser_class:
-            raise ParserException(f"No parser implemented for {site.value} yet")
-        
-        logger.info(f"Using {parser_class.__name__} for {url}")
-        return parser_class()
+        Returns:
+            UniversalParser instance
+        """
+        return UniversalParser()
     
     @classmethod
     def is_supported(cls, url: str) -> bool:
         """
         Check if URL can be parsed.
+        With universal parser, all URLs are supported.
         
         Args:
             url: Job posting URL
             
         Returns:
-            True if parser is available
+            True (always supported with universal parser)
         """
-        site = detect_site(url)
-        return site != JobSite.UNKNOWN and site in cls.PARSER_MAP
+        return True  # Universal parser supports all URLs

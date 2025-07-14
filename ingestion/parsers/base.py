@@ -25,20 +25,8 @@ class ParserException(Exception):
 class BaseParser(ABC):
     """Abstract base class for job description parsers."""
     
-    def __init__(self, timeout: int = 10, use_llm: bool = True):
+    def __init__(self, timeout: int = 10):
         self.timeout = timeout
-        self.use_llm = use_llm
-        self.llm_parser = None
-        
-        # Initialize LLM parser if requested
-        if self.use_llm:
-            try:
-                from .llm_parser import LLMParser
-                self.llm_parser = LLMParser()
-                logger.info("LLM parser initialized successfully")
-            except Exception as e:
-                logger.warning(f"Failed to initialize LLM parser: {str(e)}. Falling back to traditional parsing.")
-                self.llm_parser = None
         
         # Load tools from CSV file
         self._load_tools_from_csv()

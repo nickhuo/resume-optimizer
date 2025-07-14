@@ -1,15 +1,13 @@
 """
-Job description parsers for various job boards.
+Job description parsers - now simplified to use universal parser.
 """
 from .base import BaseParser, ParserException
-from .greenhouse import GreenhouseParser
-from .workday import WorkdayParser
+from .universal_parser import UniversalParser
 from .factory import ParserFactory
 
 __all__ = [
     'BaseParser',
     'ParserException',
-    'GreenhouseParser', 
-    'WorkdayParser',
+    'UniversalParser',
     'ParserFactory'
 ]
