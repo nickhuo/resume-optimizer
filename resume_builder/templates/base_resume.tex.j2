@@ -1,0 +1,69 @@
+% !TEX program = xelatex
+% Resume optimized for << company >> - << title >>
+
+\documentclass{resume}
+
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\newcommand{\linkarrow}{\tikz[baseline=-0.5ex] \draw[->, thick] (0,0) -- (0.7em,0.7em);}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\name{<< resume.name | upper | latex_escape >>}
+
+\basicInfo{
+  \email{<< resume.email | latex_escape >>}
+  \textperiodcentered\ 
+  \phone{<< resume.phone | latex_escape >>} 
+  \textperiodcentered\
+  <% if resume.github %>\github[]{<< resume.github | latex_escape >>}
+  \textperiodcentered\<% endif %>
+  <% if resume.website %>\homepage[]{<< resume.website | latex_escape >>}<% endif %>
+  }
+
+\section[EDUCATION]{EDUCATION}
+
+<% for edu in resume.education %>\datedsubsection{\textbf{<< edu.school | latex_escape >>}}{<< edu.start_date | latex_escape >> - << edu.end_date | latex_escape >>}
+
+\datedline{\textit{\textbf{<< edu.degree | latex_escape >> in << edu.field | latex_escape >>}}}{\textit{<< edu.location | latex_escape >>}}
+
+<% if edu.highlights %>\begin{itemize}
+<% for highlight in edu.highlights %>    \item << highlight | latex_escape >>
+<% endfor %>\end{itemize}
+
+<% endif %><% endfor %>
+\section[WORK EXPERIENCE]{WORK EXPERIENCE}
+
+<% for exp in resume.experience %>\datedsubsection{\textbf{<< exp.company | latex_escape >>}}{<< exp.start_date | latex_escape >> - << exp.end_date | latex_escape >>}
+
+\datedline{\textbf{\textit{<< exp.title | latex_escape >>}}}{\textit{<< exp.description | default("") | latex_escape >>}}
+
+\begin{itemize}
+<% for bullet in exp.bullets %>  \item << bullet | latex_escape >>
+<% endfor %>\end{itemize}
+
+<% endfor %>
+\section[PROJECTS]{PROJECTS}
+
+<% for project in resume.projects %>\datedsubsection{\textbf{<< project.name | latex_escape >>} }{}
+
+\begin{itemize}
+<% for bullet in project.bullets %>  \item << bullet | latex_escape >>
+<% endfor %>\end{itemize}
+
+<% endfor %>
+\section[SKILLS]{SKILLS}
+
+\begin{itemize}
+<% for category, skills_list in resume.skills.items() %>\item \textbf{<< category | latex_escape >>}: << skills_list | join(", ") | latex_escape >>
+<% endfor %>\end{itemize}
+
+<% if resume.footnote %>\renewcommand\thefootnote{}\footnotetext{<< resume.footnote | latex_escape >>}
+\addtocounter{footnote}{-1}
+\renewcommand\thefootnote{\arabic{footnote}}
+<% endif %>
+
+\end{document}

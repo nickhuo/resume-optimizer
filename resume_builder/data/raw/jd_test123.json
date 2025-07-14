@@ -1,0 +1,56 @@
+{
+  "company": "OpenAI",
+  "title": "Software Engineer - ML Infrastructure",
+  "job_type": "Full-time",
+  "location": "San Francisco, CA",
+  "requirements": [
+    "3+ years of experience in backend software development",
+    "Strong proficiency in Python and experience with machine learning frameworks",
+    "Experience with distributed systems and microservices architecture",
+    "Knowledge of containerization technologies like Docker and Kubernetes",
+    "Experience with cloud platforms (AWS, GCP, or Azure)",
+    "Strong understanding of database systems (SQL and NoSQL)",
+    "Experience with API design and development (REST, GraphQL)",
+    "Familiarity with CI/CD pipelines and DevOps practices"
+  ],
+  "nice_to_have": [
+    "Experience with LLM deployment and optimization",
+    "Knowledge of vector databases and embedding systems",
+    "Experience with real-time data streaming (Kafka, RabbitMQ)",
+    "Familiarity with monitoring and observability tools",
+    "Experience with Terraform or Infrastructure as Code",
+    "Open source contributions"
+  ],
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "GCP",
+    "PostgreSQL",
+    "MongoDB",
+    "FastAPI",
+    "REST API",
+    "GraphQL",
+    "Microservices",
+    "CI/CD",
+    "Terraform",
+    "Git",
+    "Linux",
+    "Redis",
+    "Kafka",
+    "RabbitMQ",
+    "Vector Databases",
+    "LLM",
+    "DevOps"
+  ],
+  "responsibilities": [
+    "Design and implement scalable ML infrastructure systems",
+    "Build and maintain APIs for ML model serving",
+    "Collaborate with ML engineers to optimize model deployment",
+    "Implement monitoring and logging for production systems",
+    "Contribute to architecture decisions for platform scalability"
+  ],
+  "description": "We are looking for a talented Software Engineer to join our ML Infrastructure team. You will be responsible for building and maintaining the systems that power our AI models at scale."
+}

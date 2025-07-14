@@ -1,0 +1,56 @@
+{
+  "company": "Meta",
+  "title": "Data Scientist - AI/ML",
+  "job_type": "DS",
+  "location": "Menlo Park, CA",
+  "requirements": [
+    "PhD or MS in Computer Science, Statistics, or related quantitative field",
+    "5+ years of experience in machine learning and data science",
+    "Strong programming skills in Python, R, or Scala",
+    "Experience with deep learning frameworks (PyTorch, TensorFlow)",
+    "Proficiency in SQL and big data technologies (Spark, Hadoop)",
+    "Experience with A/B testing and statistical analysis",
+    "Knowledge of recommendation systems and ranking algorithms",
+    "Experience with data visualization tools and techniques"
+  ],
+  "nice_to_have": [
+    "Experience with transformer models and LLMs",
+    "Knowledge of causal inference methods",
+    "Experience with real-time ML systems",
+    "Publications in top-tier ML conferences",
+    "Experience with MLOps and model deployment",
+    "Knowledge of graph neural networks"
+  ],
+  "skills": [
+    "Python",
+    "R",
+    "Scala", 
+    "PyTorch",
+    "TensorFlow",
+    "SQL",
+    "Spark",
+    "Hadoop",
+    "Machine Learning",
+    "Deep Learning",
+    "Statistics",
+    "A/B Testing",
+    "Data Visualization",
+    "MLOps",
+    "Recommendation Systems",
+    "NLP",
+    "Computer Vision",
+    "Statistical Analysis",
+    "Causal Inference",
+    "LLM",
+    "Transformers",
+    "Graph Neural Networks"
+  ],
+  "responsibilities": [
+    "Develop and deploy machine learning models for product recommendations",
+    "Design and run A/B experiments to measure model performance",
+    "Collaborate with engineering teams on model deployment and monitoring",
+    "Analyze large-scale datasets to extract actionable insights",
+    "Research and implement state-of-the-art ML algorithms"
+  ],
+  "description": "We are seeking a Data Scientist to join our AI/ML team working on recommendation systems and personalization algorithms that serve billions of users."
+}

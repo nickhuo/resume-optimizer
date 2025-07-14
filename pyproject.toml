@@ -24,4 +24,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 py-modules = ["jobbot"]
-packages = ["ingestion", "ingestion.models", "ingestion.services", "ingestion.utils", "ingestion.parsers"]
+packages = ["ingestion", "ingestion.models", "ingestion.services", "ingestion.utils", "ingestion.parsers", "resume_builder", "resume_builder.models", "resume_builder.services", "resume_builder.utils"]

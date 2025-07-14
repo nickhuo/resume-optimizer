@@ -6,6 +6,8 @@
 \documentclass{resume}
 
 \usepackage{xcolor} % Add this line in the preamble
+\definecolor{mywhite}{RGB}{255,255,255}
+\AtBeginDocument{\pagecolor{mywhite}}
 \usepackage[normalem]{ulem} % Add this line for better underlining support
 \usepackage{hyperref}
 \usepackage{tikz}
@@ -38,7 +40,6 @@
 \begin{itemize}
     \item GPA 3.9/4.0 · Applied Machine Learning \& Database Systems (both A) · Program \#1 in Info Systems (U.S. News)
 
-
 \end{itemize}
 
 
@@ -49,7 +50,7 @@
 
 \begin{itemize}
 
-\item GPA: 3.79/4.50 (Top 10\%) · Multiple scholarships · 4 ML modeling wins in Supply Chain, Finance, and Computer Vision
+\item GPA: 3.79/4.50 (Top 10\%) · Multiple scholarships · 4 ML modeling wins in supply chain, finance, and computer vision
 
 \end{itemize}
 
@@ -57,6 +58,22 @@
 \section[WORK EXPERIENCE]{WORK EXPERIENCE}
 
 %Mirror World Internship
+
+
+\datedsubsection{\textbf{Donut Labs}}{Jun 2025 - Aug 2025}
+
+\datedline{\textbf{\textit{Software Engineer Intern}}}{\textit{Agentic Browser Backed by Sequoia Capital}}
+
+
+\begin{itemize}
+  \item Engineered GPT-seeded ANN sentiment pipeline parsing 50 k tweets/day, slashing inference cost 19× to 0.003¢ per tweet
+  \item Implemented prompt-tagged Pinecone vector DB, labeled 82 \% tweets and cut GPT calls 80 \% with equal accuracy
+  \item Architected 18-endpoint RESTful FastAPI microservice for LLM inference \& content ops: QPS ↑3× with P95 220 ms; auto-Swagger cut frontend integration 66 \%, and Pydantic validation trimmed 4xx/5xx errors 40\%
+  \item Rolled out LangSmith observability across agent stack; engineered a closed-loop LLM evaluation harness with automated BLEU/BERTScore gates plus human adjudication, achieving 100 \% PR coverage and surfacing regressions within 24 h.
+
+
+\end{itemize}
+
 
 \datedsubsection{\textbf{Sonic SVM}}{Mar 2023 - Jul 2024}
 
@@ -69,9 +86,8 @@
   \item Led the development of data governance system, drove 3 C-level strategic decisions with quant insights, report to CPO
   \item Scaled data sources by 2x and architected ETL pipelines on GCP, ensuring 99.9\% accuracy with optimized SQL queries  
   \item Automated API log extraction workflow from PostgreSQL to BigQuery using Airflow, reducing 43.2\% processing time
-  \item Designed tracking specs and deployed backend logging for 5 core products, enabling 20+ key metrics for analytics
   \item Built a Pub/Sub → Dataflow streaming pipeline, surfacing in-game KPIs to BI dashboards with <5 s latency
-  \item Launched Looker Studio dashboards consumed by 13 members; cut insight turnaround from 2 days → 30 min
+  \item Launched Looker Studio dashboards consumed by 7 members; cut insight turnaround from 2 days → 30 min
 
 
 %add data warehousing to it
@@ -90,21 +106,6 @@
 
 
 
-\datedsubsection{\textbf{BiteMatch}} {}
-
-\begin{itemize}
-        \item Led a 4-member Agile squad, grooming backlog and delivering on 2-week sprints with 100\% sprint goal hit rate
-	\item Top 10\% in course. Developed smart recipe app to personalize meal choices using React, Node.js, and MySQL %with 7+ database tables
-	\item Created RESTful API with 12+ endpoints handling user auth, recipe CRUD, video search, and review system
-  \item Reduced YouTube API calls by caching videos in DB and using a quota-aware fetch logic to avoid exceeding limits
-  \item Containerized services with Docker \& GitHub Actions; push-to-prod cycle shrank from 20 min to <5 min
-
-
-
-
-\end{itemize}
-
-
 
 
 \datedsubsection{\textbf{ReplicaGenie} } {}
@@ -115,27 +116,25 @@
   \item Automated LinkedIn/GitHub scraping via Selenium on AWS Lambda; parsed \& stored structured data in MongoDB
   \item Built MongoDB → RabbitMQ CDC stream pushing changes to feature store in <1 s, enabling real-time personalization
 
-  \item Built Bytewax embedding pipeline that upserts vectors to Qdrant in <1 s, increasing retrieval freshness by 95 \%
-
   \item Delivered 4-bit LoRA fine-tuning on SageMaker, trimming GPU training cost 77 \% and guaranteeing reproducibility
 
 
   \item Integrated Opik tracing and auto-eval, detecting hallucination \& relevance and lifting LangChain-SageMaker reliability
   \item Orchestrated 6-service Docker stack-MongoDB replica, RabbitMQ, Qdrant—delivering production-ready RAG
- 
+
 
 \end{itemize}
 
 
-\datedsubsection{\textbf{Weathendar} } {}
+
+\datedsubsection{\textbf{BiteMatch}} {}
 
 \begin{itemize}
-  \item Implemented OAuth 2.0 with HTTP-only cookies on Netlify Functions, securing 100 \% of routes without server upkeep
-
-  \item Sustained 90 + Lighthouse quality via ESLint/Prettier/TS generics; added React error boundaries for crash-free UX
-
-  \item Cut first-sync load to < 2 s with React Query caching, code-split lazy modules, and image lazy loading
-  \item Added PWA Service Worker \& IndexedDB cache, enabling full offline access and background weather sync
+  \item Led a 4-member Agile squad, grooming backlog and delivering on 2-week sprints with 100\% sprint goal hit rate
+	\item Top 10\% in course. Developed smart recipe app to personalize meal choices using React, Node.js, and MySQL %with 7+ database tables
+	\item Created RESTful API with 12+ endpoints handling user auth, recipe CRUD, video search, and review system
+  \item Reduced YouTube API calls by caching videos in DB and using a quota-aware fetch logic to avoid exceeding limits
+  \item Containerized services with Docker \& GitHub Actions; push-to-prod cycle shrank from 20 min to <5 min
 
 
 \end{itemize}
@@ -158,9 +157,12 @@
 \section[SKILLS]{SKILLS}
 
 \begin{itemize}
-\item \textbf{Programming}: Python, TypeScript, Go, JavaScript, SQL, Bash, Java, Rust
-\item \textbf{Frameworks}: React, Next.js, Redux, Tailwind CSS, Vite, Node.js, Django, Express.js, MongoDB, Redis
+\item \textbf{Programming}: Python, TypeScript, Go, JavaScript, SQL, Zsh \& Bash, Node.js, React
+\item \textbf{Frameworks}: React, Next.js, Jenkins, Tailwind CSS, Vite, Node.js, Django, Express.js, MongoDB, Redis
 \item \textbf{DevOps }: AWS, Docker, Terraform, GitHub Actions, Vercel, Airflow, Linux/Unix, Git
+
+%\item \textbf{Frameworks}: React, Next.js, Redux, Tailwind CSS, Vite, Node.js, Django, Express.js, MongoDB, Redis
+%\item \textbf{DevOps }: AWS, Docker, Terraform, GitHub Actions, Vercel, Airflow, Linux/Unix, Git
 \end{itemize}
 
 

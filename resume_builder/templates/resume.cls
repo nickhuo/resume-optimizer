@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{resume}[2015/05/25 An elegant Résumé class]
+\ProvidesClass{resume}[2015/05/25 An elegant Résumé class - Final version]
 \LoadClass[11pt]{article}
 
 % disable indent globally
@@ -14,13 +14,37 @@
 \RequirePackage[colorlinks=false,hidelinks,]{hyperref}
 \RequirePackage{url}
 \urlstyle{tt}
-% use fontawesome
-\RequirePackage{fontawesome}
-% use xcolor for customizing color
-%\RequirePackage[usenames,dvipsnames]{xcolor}
+
 % loading fonts
 \usepackage{fontspec}
-\setmainfont{TeX Gyre Termes}
+
+% Use system fonts that are available
+\setmainfont[
+  BoldFont={Times New Roman Bold},
+  ItalicFont={Times New Roman Italic},
+  BoldItalicFont={Times New Roman Bold Italic}
+]{Times New Roman}
+
+% Define text-based icons as fallback
+\newcommand{\faEnvelope}{[Email]}
+\newcommand{\faPhone}{[Phone]}
+\newcommand{\faLinkedin}{[LinkedIn]}
+\newcommand{\faGithub}{[GitHub]}
+\newcommand{\faLink}{[Web]}
+\newcommand{\faHome}{[Home]}
+
+% Try to load Font Awesome if available
+\AtBeginDocument{%
+  \IfFontExistsTF{Font Awesome 5 Free}{%
+    \newfontfamily\FA[]{Font Awesome 5 Free}%
+    \renewcommand{\faEnvelope}{{\FA\symbol{"F0E0}}}%
+    \renewcommand{\faPhone}{{\FA\symbol{"F095}}}%
+    \renewcommand{\faLinkedin}{{\FA\symbol{"F08C}}}%
+    \renewcommand{\faGithub}{{\FA\symbol{"F09B}}}%
+    \renewcommand{\faLink}{{\FA\symbol{"F0C1}}}%
+    \renewcommand{\faHome}{{\FA\symbol{"F015}}}%
+  }{}%
+}
 
 \RequirePackage[
 	a4paper,

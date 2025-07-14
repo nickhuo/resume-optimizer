@@ -7,6 +7,7 @@ from rich import print as rprint
 
 
 from ingestion.cli import app as ingestion_app
+from resume_builder.cli import app as resume_app
 
 # Create main app
 app = typer.Typer(
@@ -17,6 +18,7 @@ app = typer.Typer(
 
 # Add sub-commands
 app.add_typer(ingestion_app, name="ingest", help="Job ingestion commands")
+app.add_typer(resume_app, name="resume", help="Resume building and optimization commands")
 
 
 @app.command()
