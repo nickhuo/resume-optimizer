@@ -1,0 +1,21 @@
+# Fdb version 4
+["pdflatex"] 1752469625.71613 "/Users/nickhuo/Documents/GitHub/semi-apply/resume_builder/templates/sde.tex" "sde.pdf" "sde" 1752469625.80855 2
+  "/Users/nickhuo/Documents/GitHub/semi-apply/resume_builder/templates/sde.tex" 1752469625.2797 9083 a9f4204b01c5a3520c31fd98be0cda71 ""
+  "/usr/local/texlive/2024basic/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1136768653 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
+  "/usr/local/texlive/2024basic/texmf-dist/tex/generic/iftex/ifluatex.sty" 1572645307 492 1994775aa15b0d1289725a0b1bbc2d4c ""
+  "/usr/local/texlive/2024basic/texmf-dist/tex/generic/iftex/iftex.sty" 1644112042 7237 bdd120a32c8fdb4b433cf9ca2e7cd98a ""
+  "/usr/local/texlive/2024basic/texmf-dist/tex/generic/iftex/ifxetex.sty" 1572645307 488 4565444a3e75e59cb2702dc42e18f482 ""
+  "/usr/local/texlive/2024basic/texmf-dist/tex/latex/base/article.cls" 1705352648 20144 147463a6a579f4597269ef9565205cfe ""
+  "/usr/local/texlive/2024basic/texmf-dist/tex/latex/base/size11.clo" 1705352648 8464 59874a3b0776c73e2a138b025d8473dd ""
+  "/usr/local/texlive/2024basic/texmf-dist/tex/xelatex/xltxtra/xltxtra.sty" 1546294187 5686 8a29af4ad9d707b5280738995d050842 ""
+  "/usr/local/texlive/2024basic/texmf-dist/web2c/texmf.cnf" 1708706663 41649 5d6ae549fbbcb850a863f69aa41f3d10 ""
+  "/usr/local/texlive/2024basic/texmf-var/web2c/pdftex/pdflatex.fmt" 1725487447 7536466 92666acd8231b01af9f7df613b6f2184 ""
+  "/usr/local/texlive/2024basic/texmf.cnf" 1710011638 628 8b896f7d9d41b43f4346b9091e52171f ""
+  "resume.cls" 1752464948.61164 4150 c53c0713aadce72d8479c73de3170795 ""
+  "sde.aux" 0 -1 0 "pdflatex"
+  "sde.tex" 1752469625.2797 9083 a9f4204b01c5a3520c31fd98be0cda71 ""
+  (generated)
+  "sde.aux"
+  "sde.log"
+  "sde.pdf"
+  (rewritten before read)
