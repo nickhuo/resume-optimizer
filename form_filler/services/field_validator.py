@@ -3,7 +3,7 @@
 """
 import logging
 from typing import Dict, Any, List, Optional
-from playwright.sync_api import Page, TimeoutError
+from playwright.async_api import Page, TimeoutError
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class FieldValidator:
         self.timeout = timeout
         self.validation_results = []
     
-    def validate_field(self, selector: str, expected_value: str, field_info: Dict[str, Any]) -> bool:
+    async def validate_field(self, selector: str, expected_value: str, field_info: Dict[str, Any]) -> bool:
         """
         验证单个字段的填充
         
@@ -46,7 +46,7 @@ class FieldValidator:
                 event_fired = True
             
             # 添加事件监听器
-            self.page.evaluate("""
+            await self.page.evaluate("""
                 (selector) => {
                     const element = document.querySelector(selector);
                     if (element) {
@@ -61,7 +61,7 @@ class FieldValidator:
             """, selector)
             
             # 触发 blur 事件
-            self.page.evaluate("""
+            await self.page.evaluate("""
                 (selector) => {
                     const element = document.querySelector(selector);
                     if (element) {
@@ -72,13 +72,13 @@ class FieldValidator:
             """, selector)
             
             # 等待事件触发
-            self.page.wait_for_function(
+            await self.page.wait_for_function(
                 "window.__fieldChanged || window.__fieldBlurred",
                 timeout=self.timeout
             )
             
             # 获取当前值
-            current_value = self.page.evaluate("""
+            current_value = await self.page.evaluate("""
                 (selector) => {
                     const element = document.querySelector(selector);
                     if (element) {
@@ -110,7 +110,7 @@ class FieldValidator:
                 logger.info(f"Validation passed for field {selector}")
             
             # 清理事件标记
-            self.page.evaluate("() => { window.__fieldChanged = false; window.__fieldBlurred = false; }")
+            await self.page.evaluate("() => { window.__fieldChanged = false; window.__fieldBlurred = false; }")
             
             return is_valid
             
@@ -140,7 +140,7 @@ class FieldValidator:
             })
             return False
     
-    def validate_all_fields(self, filled_fields: List[Dict[str, Any]]) -> Dict[str, Any]:
+    async def validate_all_fields(self, filled_fields: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
         验证所有填充的字段
         
@@ -155,7 +155,7 @@ class FieldValidator:
         failed_fields = []
         
         for field in filled_fields:
-            is_valid = self.validate_field(
+            is_valid = await self.validate_field(
                 selector=field['selector'],
                 expected_value=field['value'],
                 field_info=field.get('field_info', {})
@@ -179,7 +179,7 @@ class FieldValidator:
         
         return validation_report
     
-    def check_form_errors(self) -> List[Dict[str, Any]]:
+    async def check_form_errors(self) -> List[Dict[str, Any]]:
         """
         检查页面上的表单错误消息
         
@@ -199,10 +199,10 @@ class FieldValidator:
         ]
         
         for selector in error_selectors:
-            error_elements = self.page.query_selector_all(selector)
+            error_elements = await self.page.query_selector_all(selector)
             for element in error_elements:
-                if element.is_visible():
-                    error_text = element.text_content()
+                if await element.is_visible():
+                    error_text = await element.text_content()
                     if error_text and error_text.strip():
                         errors.append({
                             'selector': selector,
@@ -215,7 +215,7 @@ class FieldValidator:
         
         return errors
     
-    def wait_for_validation_complete(self, max_wait: int = 3000) -> bool:
+    async def wait_for_validation_complete(self, max_wait: int = 3000) -> bool:
         """
         等待页面验证完成（例如 AJAX 验证）
         
@@ -227,7 +227,7 @@ class FieldValidator:
         """
         try:
             # 等待加载指示器消失
-            self.page.wait_for_function(
+            await self.page.wait_for_function(
                 """
                 () => {
                     // 检查常见的加载指示器
@@ -246,7 +246,7 @@ class FieldValidator:
             )
             
             # 额外等待一小段时间确保验证完成
-            self.page.wait_for_timeout(500)
+            await self.page.wait_for_timeout(500)
             
             return True
             

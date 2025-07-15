@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Integration script to replace SmartFormFiller with ProFormFiller in WorkflowManager
+Integration script using ProFormFiller in WorkflowManager
 This script demonstrates the changes needed to upgrade to the new professional form filling system
 """
 
@@ -23,19 +23,16 @@ logger = logging.getLogger(__name__)
 
 
 class UpgradedWorkflowManager(WorkflowManager):
-    """Enhanced WorkflowManager using ProFormFiller instead of SmartFormFiller"""
+    """Enhanced WorkflowManager using ProFormFiller"""
     
     def __init__(self, config: dict):
         """Initialize with ProFormFiller components"""
         # Call parent init first to set up basic services
         super().__init__(config)
         
-        # Replace smart_filler with pro_filler
+        # Initialize ProFormFiller components
         logger.info("Initializing ProFormFiller components...")
         self.pro_filler = ProFormFiller(self.gpt_service)
-        
-        # Keep smart_filler as fallback
-        self.smart_filler_fallback = self.smart_filler
         
         # New components for pro filling
         self.dom_snapshot = None  # Will be initialized per page
@@ -44,7 +41,7 @@ class UpgradedWorkflowManager(WorkflowManager):
         logger.info("ProFormFiller integration complete")
     
     async def _fill_form(self, page, analysis_result):
-        """Enhanced form filling using ProFormFiller with fallback to SmartFormFiller"""
+        """Enhanced form filling using ProFormFiller"""
         logger.info("Starting enhanced form filling with ProFormFiller")
         
         result = {
@@ -82,37 +79,11 @@ class UpgradedWorkflowManager(WorkflowManager):
                 return result
             else:
                 logger.warning(f"ProFormFiller had issues: {fill_result.get('errors', [])}")
-                
-                # Fallback to SmartFormFiller
-                if fill_result.get('fields_filled', 0) < 3:  # If very few fields filled
-                    logger.info("Falling back to SmartFormFiller...")
-                    result['method'] = 'smart_filler_fallback'
-                    
-                    # Extract fields using original parser
-                    fields = await self.field_parser.extract_fields(page)
-                    
-                    if fields:
-                        fallback_result = await self.smart_filler_fallback.fill_form(page, fields)
-                        result.update(fallback_result)
-                else:
-                    # ProFormFiller filled some fields, keep its result
-                    result.update(fill_result)
+                result.update(fill_result)
                     
         except Exception as e:
             logger.error(f"Form filling failed: {str(e)}", exc_info=True)
             result['errors'].append(str(e))
-            
-            # Try fallback
-            try:
-                logger.info("Attempting SmartFormFiller fallback after exception...")
-                fields = await self.field_parser.extract_fields(page)
-                if fields:
-                    fallback_result = await self.smart_filler_fallback.fill_form(page, fields)
-                    result.update(fallback_result)
-                    result['method'] = 'smart_filler_recovery'
-            except Exception as fallback_error:
-                logger.error(f"Fallback also failed: {str(fallback_error)}")
-                result['errors'].append(f"Fallback error: {str(fallback_error)}")
         
         return result
     

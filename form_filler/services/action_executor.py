@@ -52,8 +52,9 @@ class ActionExecutor:
         try:
             control_type = action['control'].lower()
             
-            # 根据控件类型选择执行方法
+            # 根据控件类型选择执行方法，每次输入后模拟延迟
             if control_type in ['text', 'email', 'tel', 'url', 'number']:
+                await asyncio.sleep(0.5)  # 模拟自然输入延迟
                 return await self._fill_text(action, result)
             elif control_type == 'select':
                 return await self._select_option(action, result)
@@ -85,35 +86,50 @@ class ActionExecutor:
         
         for retry in range(self.max_retries):
             try:
-                # 等待元素
-                element = await self.page.wait_for_selector(selector, timeout=5000)
+                # 首先尝试直接找到元素（不等待可见性）
+                element = await self.page.query_selector(selector)
                 if not element:
-                    raise Exception(f"找不到元素: {selector}")
+                    # 如果直接找不到，再等待元素出现
+                    element = await self.page.wait_for_selector(selector, timeout=5000)
+                    if not element:
+                        raise Exception(f"找不到元素: {selector}")
                 
-                # 滚动到元素可见
-                await element.scroll_into_view_if_needed()
+                # 检查元素是否隐藏
+                is_hidden = await element.is_hidden()
+                element_type = await element.get_attribute('type')
                 
-                # 清空并填充
-                await element.fill('')
-                await element.fill(value)
-                
-                # 触发blur事件（重要：很多框架依赖blur事件）
-                await element.evaluate('el => el.blur()')
-                await self.page.keyboard.press('Tab')
-                
-                # 等待一下让框架处理
-                await self.page.wait_for_timeout(100)
-                
-                # 读回验证
-                actual_value = await element.evaluate('el => el.value')
-                
-                if actual_value == value:
+                if is_hidden and element_type == 'hidden':
+                    # 对于隐藏字段，直接设置值并触发事件
+                    await self._fill_hidden_field(element, value)
                     result['success'] = True
-                    result['actual_value'] = actual_value
+                    result['actual_value'] = value
+                    logger.info(f"成功填充隐藏字段: {selector} = {value}")
                     return result
                 else:
-                    logger.warning(f"值不匹配，期望: {value}, 实际: {actual_value}")
-                    result['retries'] = retry + 1
+                    # 对于可见字段，使用原有逻辑
+                    await element.scroll_into_view_if_needed()
+                    
+                    # 清空并填充
+                    await element.fill('')
+                    await element.fill(value)
+                    
+                    # 触发blur事件（重要：很多框架依赖blur事件）
+                    await element.evaluate('el => el.blur()')
+                    await self.page.keyboard.press('Tab')
+                    
+                    # 等待一下让框架处理
+                    await self.page.wait_for_timeout(100)
+                    
+                    # 读回验证
+                    actual_value = await element.evaluate('el => el.value')
+                    
+                    if actual_value == value:
+                        result['success'] = True
+                        result['actual_value'] = actual_value
+                        return result
+                    else:
+                        logger.warning(f"值不匹配，期望: {value}, 实际: {actual_value}")
+                        result['retries'] = retry + 1
                     
             except Exception as e:
                 logger.error(f"填充文本失败 (尝试 {retry + 1}/{self.max_retries}): {e}")

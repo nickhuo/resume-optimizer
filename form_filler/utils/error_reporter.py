@@ -29,7 +29,7 @@ class ErrorReporter:
         # 确保目录存在
         self.screenshots_dir.mkdir(parents=True, exist_ok=True)
         
-    def report_error(self, 
+    async def report_error(self, 
                     error_type: str,
                     error_message: str,
                     context: Dict[str, Any],
@@ -64,18 +64,18 @@ class ErrorReporter:
         # 如果提供了页面对象，进行截图
         if page:
             try:
-                screenshot_path = self._take_screenshot(page, error_id)
+                screenshot_path = await self._take_screenshot(page, error_id)
                 error_record["screenshot_path"] = str(screenshot_path)
                 
                 # 收集页面信息
                 error_record["page_info"] = {
                     "url": page.url,
-                    "title": page.title()
+                    "title": await page.title()
                 }
                 
                 # 如果有失败的选择器，尝试收集相关DOM信息
                 if selector:
-                    dom_info = self._collect_dom_info(page, selector)
+                    dom_info = await self._collect_dom_info(page, selector)
                     error_record["dom_info"] = dom_info
                     
             except Exception as e:
@@ -146,7 +146,7 @@ class ErrorReporter:
         import uuid
         return f"err_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{str(uuid.uuid4())[:8]}"
     
-    def _take_screenshot(self, page: Page, error_id: str) -> Path:
+    async def _take_screenshot(self, page: Page, error_id: str) -> Path:
         """
         截取页面截图
         
@@ -158,10 +158,10 @@ class ErrorReporter:
             截图文件路径
         """
         screenshot_path = self.screenshots_dir / f"{error_id}.png"
-        page.screenshot(path=str(screenshot_path), full_page=True)
+        await page.screenshot(path=str(screenshot_path), full_page=True)
         return screenshot_path
     
-    def _collect_dom_info(self, page: Page, selector: str) -> Dict[str, Any]:
+    async def _collect_dom_info(self, page: Page, selector: str) -> Dict[str, Any]:
         """
         收集失败选择器周围的DOM信息
         
@@ -173,7 +173,7 @@ class ErrorReporter:
             DOM信息字典
         """
         try:
-            dom_info = page.evaluate(f"""
+            dom_info = await page.evaluate(f"""
                 (selector) => {{
                     const elements = document.querySelectorAll(selector);
                     const info = {{
@@ -231,8 +231,22 @@ class ErrorReporter:
     
     def _write_error_record(self, record: Dict[str, Any]):
         """写入错误记录到JSONL文件"""
+        # 确保所有值都是可序列化的
+        serializable_record = self._make_serializable(record)
         with open(self.errors_file, 'a', encoding='utf-8') as f:
-            f.write(json.dumps(record, ensure_ascii=False) + '\n')
+            f.write(json.dumps(serializable_record, ensure_ascii=False) + '\n')
+    
+    def _make_serializable(self, obj: Any) -> Any:
+        """递归地将对象转换为可JSON序列化的格式"""
+        if isinstance(obj, dict):
+            return {k: self._make_serializable(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [self._make_serializable(item) for item in obj]
+        elif isinstance(obj, (str, int, float, bool, type(None))):
+            return obj
+        else:
+            # 对于其他类型，转换为字符串
+            return str(obj)
     
     def _write_success_record(self, record: Dict[str, Any]):
         """写入成功记录到单独的文件"""

@@ -11,6 +11,8 @@ from pathlib import Path
 from .gpt_service import GPTService
 from .dom_snapshot import DOMSnapshot
 from .action_executor import ActionExecutor
+from .enhanced_data_manager import EnhancedDataManager
+from .field_learning_system import FieldLearningSystem
 
 logger = logging.getLogger(__name__)
 
@@ -26,9 +28,12 @@ class ProFormFiller:
             gpt_service: GPT服务实例
         """
         self.gpt_service = gpt_service or GPTService()
+        self.data_manager = EnhancedDataManager()
+        self.learning_system = FieldLearningSystem(self.gpt_service)
         
     async def fill_form(self, page, personal_data: Dict[str, Any] = None,
-                       resume_data: Dict[str, Any] = None) -> Dict[str, Any]:
+                       resume_data: Dict[str, Any] = None,
+                       url: str = None) -> Dict[str, Any]:
         """
         填写表单的主流程
         
@@ -53,8 +58,16 @@ class ProFormFiller:
         }
         
         try:
-            # 1. 生成DOM快照
-            logger.info("步骤1: 生成DOM快照")
+            # 检测平台类型
+            platform = None
+            if url:
+                platform = self.learning_system.detect_platform(url)
+                logger.info(f"检测到平台: {platform or 'unknown'}")
+            
+            # 1. 加载数据并生成DOM快照
+            logger.info("步骤1: 加载数据并生成DOM快照")
+            personal_data = self.data_manager.personal_data
+            resume_data = self.data_manager.resume_data
             dom_snapshot = DOMSnapshot(page)
             element_groups = await dom_snapshot.generate_snapshot()
             
@@ -66,9 +79,14 @@ class ProFormFiller:
             logger.info("步骤2: 语义分析和字段映射")
             all_actions = []
             
+            context = {
+                'url': url,
+                'platform': platform
+            }
+            
             for group in element_groups:
                 actions = await self._analyze_element_group(
-                    group, personal_data, resume_data
+                    group, personal_data, resume_data, context
                 )
                 all_actions.extend(actions)
             
@@ -130,7 +148,8 @@ class ProFormFiller:
     
     async def _analyze_element_group(self, group: Dict[str, Any],
                                    personal_data: Dict[str, Any],
-                                   resume_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+                                   resume_data: Dict[str, Any],
+                                   context: Dict[str, Any] = None) -> List[Dict[str, Any]]:
         """
         分析一组DOM元素并生成动作列表
         
@@ -196,39 +215,47 @@ Special mappings:
                 
             simplified_elements.append(simplified)
         
-        # 简化候选人数据
+        # 使用EnhancedDataManager的结构化数据
+        basic_info = personal_data.get('basic_info', {})
+        location = personal_data.get('location', {})
+        education = personal_data.get('education', {})
+        work_info = personal_data.get('work_info', {})
+        legal_status = personal_data.get('legal_status', {})
+        preferences = personal_data.get('preferences', {})
+        files = personal_data.get('files', {})
+        
         candidate_info = {
             'basic': {
-                'first_name': personal_data.get('first_name', ''),
-                'last_name': personal_data.get('last_name', ''),
-                'email': personal_data.get('email', ''),
-                'phone': personal_data.get('phone', '')
+                'first_name': basic_info.get('first_name', ''),
+                'last_name': basic_info.get('last_name', ''),
+                'email': basic_info.get('email', ''),
+                'phone': self.data_manager._format_phone(basic_info.get('phone', ''))
             },
             'location': {
-                'country': personal_data.get('country', ''),
-                'state': personal_data.get('state', ''),
-                'city': personal_data.get('city', '')
+                'country': location.get('country', 'United States'),
+                'state': location.get('state', ''),
+                'city': location.get('city', '')
             },
             'professional': {
-                'linkedin': personal_data.get('linkedin', ''),
-                'github': personal_data.get('github', ''),
-                'portfolio': personal_data.get('portfolio', '')
+                'linkedin': basic_info.get('linkedin', ''),
+                'github': basic_info.get('github', ''),
+                'portfolio': basic_info.get('portfolio', '')
             },
             'work': {
-                'current_company': personal_data.get('current_company', ''),
-                'current_title': personal_data.get('current_title', ''),
-                'years_experience': personal_data.get('years_experience', '')
+                'current_company': work_info.get('current_company', ''),
+                'current_title': work_info.get('current_title', ''),
+                'years_experience': work_info.get('years_experience', '')
             },
             'education': {
-                'university': personal_data.get('university', ''),
-                'degree': personal_data.get('degree', ''),
-                'major': personal_data.get('major', ''),
-                'graduation_year': personal_data.get('graduation_year', '')
+                'university': education.get('university', ''),
+                'degree': education.get('degree', ''),
+                'major': education.get('major', ''),
+                'graduation_year': education.get('graduation_year', '')
             },
             'application': {
-                'work_authorization': personal_data.get('work_authorization', ''),
-                'salary_expectation': personal_data.get('salary_expectation', ''),
-                'resume_path': personal_data.get('resume', {}).get('file_path', '')
+                'work_authorization': legal_status.get('work_authorization', 'Yes'),
+                'salary_expectation': self.data_manager._format_salary(preferences.get('salary_expectation', '')),
+                'resume_path': files.get('resume', {}).get('file_path', '')
             }
         }
         

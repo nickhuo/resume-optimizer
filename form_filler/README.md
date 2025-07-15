@@ -168,7 +168,7 @@ for url in urls:
 
 ### 自定义字段映射
 
-可以在 `SmartFormFiller` 中添加自定义规则来处理特殊字段。
+可以在 `ProFormFiller` 中添加自定义规则来处理特殊字段。
 
 ### 集成 Notion
 

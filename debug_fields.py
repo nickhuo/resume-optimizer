@@ -21,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 # 导入必要的模块
 from form_filler.services.field_parser import FieldParser
-from form_filler.services.smart_form_filler import SmartFormFiller
-from form_filler.services.smart_field_handler import SmartFieldHandler
+from form_filler.services.pro_form_filler import ProFormFiller
+from form_filler.services.action_executor import ActionExecutor
 
 
 async def debug_fields():
@@ -94,57 +94,44 @@ async def debug_fields():
     logger.info("="*60)
     
     # 加载个人数据
-    smart_filler = SmartFormFiller()
-    personal_data = smart_filler._load_personal_data()
+    from form_filler.services.enhanced_data_manager import EnhancedDataManager
+    data_manager = EnhancedDataManager()
+    personal_data = data_manager.personal_data
     
-    # 初始化字段处理器
-    field_handler = SmartFieldHandler(page)
+    # 测试 ProFormFiller
+    logger.info("\n测试 ProFormFiller...")
     
-    # 测试一些关键字段
-    test_cases = []
-    
-    # 查找下拉框
-    select_fields = [f for f in fields if f['type'] == 'select']
-    if select_fields:
-        test_cases.append({
-            'field': select_fields[0],
-            'value': 'United States'  # 测试国家
-        })
-    
-    # 查找文件上传
-    file_fields = [f for f in fields if f['type'] == 'file']
-    if file_fields:
-        test_cases.append({
-            'field': file_fields[0],
-            'value': personal_data.get('resume', {}).get('file_path')
-        })
-    
-    # 查找单选框
-    radio_fields = [f for f in fields if f['type'] == 'radio']
-    if radio_fields:
-        test_cases.append({
-            'field': radio_fields[0],
-            'value': 'Yes'
-        })
-    
-    # 执行测试
-    for test in test_cases:
-        field = test['field']
-        value = test['value']
+    try:
+        from form_filler.services.gpt_service import GPTService
+        gpt_service = GPTService()
+        pro_filler = ProFormFiller(gpt_service)
         
-        logger.info(f"\n测试字段: {field['label'] or field['name']} ({field['type']})")
-        logger.info(f"测试值: {value}")
-        
-        result = await field_handler.analyze_and_fill_field(
-            field_info=field,
-            value_to_fill=value,
-            personal_data=personal_data
+        # 使用 ProFormFiller 填充表单
+        fill_result = await pro_filler.fill_form(
+            page=page,
+            personal_data=personal_data,
+            resume_data=data_manager.resume_data,
+            url=url
         )
         
-        if result['success']:
-            logger.info(f"✅ 成功: {result['actual_value']} (置信度: {result['confidence']:.2f})")
-        else:
-            logger.error(f"❌ 失败: {result['error']}")
+        logger.info(f"\nProFormFiller 结果:")
+        logger.info(f"成功: {fill_result['success']}")
+        logger.info(f"填充字段数: {fill_result['stats']['total_fields']}")
+        logger.info(f"成功字段数: {fill_result['stats']['filled_fields']}")
+        logger.info(f"失败字段数: {fill_result['stats']['failed_fields']}")
+        logger.info(f"成功率: {fill_result['stats'].get('success_rate', 'N/A')}")
+        
+        if fill_result['errors']:
+            logger.error(f"错误: {fill_result['errors'][:5]}")
+        
+        # 显示填充的字段
+        if fill_result['filled_fields']:
+            logger.info(f"\n填充的字段:")
+            for selector, field_data in list(fill_result['filled_fields'].items())[:10]:
+                logger.info(f"  - {selector}: {field_data['value']} ({field_data['type']})")
+    
+    except Exception as e:
+        logger.error(f"ProFormFiller 测试失败: {e}")
     
     # 等待查看
     logger.info("\n按回车键结束...")

@@ -15,7 +15,6 @@ import json
 from .services.field_parser import FieldParser
 from .services.page_analyzer import PageAnalyzer
 from .services.gpt_service import GPTService
-from .services.smart_form_filler import SmartFormFiller
 from .services.pro_form_filler import ProFormFiller
 from .services.dom_snapshot import DOMSnapshot
 from .services.action_executor import ActionExecutor
@@ -49,9 +48,8 @@ class WorkflowManager:
         self.page_analyzer = PageAnalyzer(self.gpt_service)
         self.field_parser = FieldParser()
         
-        # Use ProFormFiller as primary, keep SmartFormFiller as fallback
+        # Use ProFormFiller as primary form filler
         self.pro_filler = ProFormFiller(self.gpt_service)
-        self.smart_filler = SmartFormFiller(self.gpt_service)  # Keep as fallback
         
         # Page-specific components (initialized per page)
         self.dom_snapshot = None
@@ -129,7 +127,14 @@ class WorkflowManager:
             
             # 步驟2: 導航到目標頁面
             self._log_step("導航到目標頁面", {"url": url})
-            await page.goto(url, wait_until='networkidle', timeout=30000)
+            # Increase timeout to 60 seconds and use 'domcontentloaded' for faster navigation
+            await page.goto(url, wait_until='domcontentloaded', timeout=60000)
+            # Wait for the page to be fully loaded
+            try:
+                await page.wait_for_load_state('networkidle', timeout=30000)
+            except:
+                # If networkidle times out, continue anyway
+                self._log_step("頁面載入超時，繼續處理", {})
             await asyncio.sleep(2)  # 等待頁面完全加載
             
             # 保存初始截圖
@@ -245,14 +250,26 @@ class WorkflowManager:
                 
                 elif recommended_action.action_type == ActionType.LOGIN_REQUIRED:
                     self._log_step("需要登錄", {})
-                    await self.error_reporter.report_login_required(url, self.current_session_id)
+                    self.error_reporter.report_error(
+                        error_type="login_required",
+                        error_message="需要登錄才能繼續",
+                        context={"url": url, "session_id": self.current_session_id},
+                        page=page
+                    )
                     result['error'] = "需要登錄才能繼續"
                     break
                 
                 elif recommended_action.action_type == ActionType.WAIT_FOR_HUMAN:
                     self._log_step("需要人工干預", {"reason": recommended_action.reasoning})
-                    await self.error_reporter.report_human_intervention_needed(
-                        url, recommended_action.reasoning, self.current_session_id
+                    self.error_reporter.report_error(
+                        error_type="human_intervention_required",
+                        error_message=f"需要人工干預: {recommended_action.reasoning}",
+                        context={
+                            "url": url, 
+                            "session_id": self.current_session_id,
+                            "reason": recommended_action.reasoning
+                        },
+                        page=page
                     )
                     result['error'] = f"需要人工干預: {recommended_action.reasoning}"
                     break
@@ -272,7 +289,12 @@ class WorkflowManager:
         except Exception as e:
             logger.error(f"工作流執行失敗: {str(e)}", exc_info=True)
             result['error'] = str(e)
-            await self.error_reporter.report_error(url, e, self.current_session_id)
+            self.error_reporter.report_error(
+                error_type=type(e).__name__,
+                error_message=str(e),
+                context={"url": url, "session_id": self.current_session_id},
+                page=page if 'page' in locals() and page else None
+            )
             
         finally:
             # 清理資源
@@ -360,7 +382,7 @@ class WorkflowManager:
         }
     
     async def _fill_form(self, page: Page, analysis_result: PageAnalysisResult) -> Dict[str, Any]:
-        """填寫表單 - 使用ProFormFiller with SmartFormFiller fallback"""
+        """填寫表單 - 使用ProFormFiller"""
         result = {
             'success': False,
             'filled_fields': {},
@@ -395,10 +417,14 @@ class WorkflowManager:
             
             # Try ProFormFiller first
             self._log_step("使用ProFormFiller填寫表單", {})
+            # 获取当前页面URL
+            current_url = page.url
+            
             fill_result = await self.pro_filler.fill_form(
                 page=page,
                 personal_data=personal_data,
-                resume_data=resume_data
+                resume_data=resume_data,
+                url=current_url
             )
             
             if fill_result['success'] and fill_result.get('fields_filled', 0) >= 3:
@@ -412,28 +438,6 @@ class WorkflowManager:
             logger.error(f"ProFormFiller失敗: {str(e)}", exc_info=True)
             result['errors'].append(f"ProFormFiller error: {str(e)}")
         
-        # Fallback to SmartFormFiller
-        self._log_step("回退到SmartFormFiller", {})
-        result['method'] = 'smart_filler_fallback'
-        
-        try:
-            # 提取表單字段
-            fields = await self.field_parser.extract_fields(page)
-            
-            if not fields:
-                result['errors'].append("未找到表單字段")
-                return result
-            
-            # 填寫表單
-            fill_result = await self.smart_filler.fill_form(page, fields)
-            
-            result['success'] = fill_result.get('success', False)
-            result['filled_fields'] = fill_result.get('filled_fields', {})
-            result['errors'].extend(fill_result.get('errors', []))
-            
-        except Exception as e:
-            logger.error(f"SmartFormFiller也失敗: {str(e)}", exc_info=True)
-            result['errors'].append(f"SmartFormFiller error: {str(e)}")
         
         return result
     async def _validate_form(self, page: Page, filled_fields: Dict[str, Any] = None) -> Dict[str, Any]:
@@ -553,8 +557,9 @@ class WorkflowManager:
                 
                 # 等待可能的導航
                 try:
-                    await page.wait_for_load_state('networkidle', timeout=10000)
+                    await page.wait_for_load_state('networkidle', timeout=15000)
                 except:
+                    # Continue even if networkidle times out
                     pass
                 
                 # 檢查是否發生了導航
