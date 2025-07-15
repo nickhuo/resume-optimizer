@@ -1,0 +1,60 @@
+{
+  "name": "Jiajun Huo",
+  "email": "jiajun.huo@gmail.com",
+  "phone": "+1 2677778518",
+  "location": "Urbana, IL",
+  "website": "nickhuo.com",
+  "github": "NickHuo",
+  "linkedin": "nickhuo",
+  
+  "summary": "Experienced software engineer with a passion for building scalable applications",
+  
+  "education": [
+    {
+      "institution": "University of Illinois at Urbana-Champaign",
+      "degree": "Master of Science",
+      "field": "Information Science",
+      "start_date": "2024-08",
+      "end_date": "2026-05",
+      "gpa": "3.9/4.0",
+      "coursework": ["Machine Learning", "Data Mining", "Software Engineering"]
+    }
+  ],
+  
+  "experience": [
+    {
+      "company": "Example Tech Company",
+      "title": "Software Engineer Intern",
+      "location": "San Francisco, CA",
+      "start_date": "2023-06",
+      "end_date": "2023-08",
+      "description": "Developed and maintained web applications using React and Node.js",
+      "highlights": [
+        "Implemented new features that improved user engagement by 25%",
+        "Collaborated with cross-functional teams to deliver projects on time",
+        "Wrote unit tests and documentation for code maintainability"
+      ]
+    }
+  ],
+  
+  "skills": {
+    "languages": ["Python", "JavaScript", "Java", "SQL"],
+    "frameworks": ["React", "Node.js", "Django", "Spring Boot"],
+    "tools": ["Git", "Docker", "AWS", "MongoDB"],
+    "other": ["Machine Learning", "Data Analysis", "Agile Development"]
+  },
+  
+  "projects": [
+    {
+      "name": "Semi-Apply",
+      "description": "Automated job application system with AI-powered form filling",
+      "technologies": ["Python", "GPT-4", "Playwright"],
+      "highlights": [
+        "Built intelligent form detection and filling system",
+        "Integrated with Notion API for application tracking"
+      ]
+    }
+  ],
+  
+  "footnote": "Authorized to work in the US"
+}

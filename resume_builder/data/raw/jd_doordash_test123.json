@@ -1,0 +1,44 @@
+{
+  "company": "DoorDash",
+  "title": "Software Engineer I, Entry-Level (Graduation Date: Fall 2024-Summer 2025)",
+  "location": "New York, NY; San Francisco, CA; Los Angeles, CA; Seattle, WA; Sunnyvale, CA",
+  "requirements": [
+    "B.S., M.S. in Computer Science or related disciplines with graduation date between Fall 2024 and Summer 2025",
+    "At least 2 previous Software Engineering internships or equivalent work experience, with no more than 2 years of full-time work experience",
+    "Experience working with databases (e.g. SQL)",
+    "Solid understanding of algorithms and data structures",
+    "Experience working with at least one object-oriented programming language (e.g. Python, Java, Kotlin, etc.)",
+    "Experience writing clean code, working with version control, and unit testing"
+  ],
+  "nice_to_have": [
+    "Able to analyze and improve efficiency, scalability, and stability of various systems",
+    "Excited to develop, release, and run large-scale web applications",
+    "Experience with solutions for systems monitoring, live deployments, and continuous integration",
+    "Experience with real-time technology problems",
+    "Experience working with service oriented architecture, writing APIs, and designing systems"
+  ],
+  "responsibilities": [
+    "Develop, maintain and ship technical elements with the support of your mentor, manager, and team members",
+    "Act on feedback, coaching, and mentorship from your mentor and team members",
+    "Actively learn about the elements to which you contribute",
+    "Make a direct impact on our business by collaborating with your team to solve problems for our customers"
+  ],
+  "skills": [
+    "Audit",
+    "Compliance",
+    "Continuous Integration",
+    "Go",
+    "Java",
+    "Kotlin",
+    "Logistics",
+    "Monitoring",
+    "Python",
+    "Recruiting",
+    "SAN",
+    "SQL",
+    "Software Engineering",
+    "Unit Testing",
+    "Version Control"
+  ],
+  "job_type": "SDE"
+}

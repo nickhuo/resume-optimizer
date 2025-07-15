@@ -1,0 +1,290 @@
+{
+  "success": false,
+  "session_id": "20250714_171950",
+  "url": "https://ats.rippling.com/rippling/jobs/203e0cac-0e30-4603-8087-f764e8c3f85c?jobSite=LinkedIn",
+  "job_id": null,
+  "steps": [
+    {
+      "action": "click_cta",
+      "target": "Apply now",
+      "success": true,
+      "details": {
+        "success": true,
+        "navigation_occurred": false,
+        "new_url": null,
+        "error": null
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "#field-62": {
+            "value": "Yes",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Yes"
+          }
+        },
+        "errors": [
+          "Failed to fill #field-79"
+        ]
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "#field-62": {
+            "value": "Yes",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Yes"
+          }
+        },
+        "errors": [
+          "Failed to fill #field-79"
+        ]
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "#field-62": {
+            "value": "Yes",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Yes"
+          }
+        },
+        "errors": [
+          "Failed to fill #field-79"
+        ]
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "#field-62": {
+            "value": "Yes",
+            "type": "text",
+            "confidence": 0.95,
+            "attempted_value": "Yes"
+          }
+        },
+        "errors": [
+          "Failed to fill #field-79"
+        ]
+      }
+    }
+  ],
+  "error": null,
+  "screenshots": [
+    "screenshots/rippling_test/20250714_171950_initial_20250714_172002.png",
+    "screenshots/rippling_test/20250714_171950_step_1_20250714_172014.png",
+    "screenshots/rippling_test/20250714_171950_step_2_20250714_172035.png",
+    "screenshots/rippling_test/20250714_171950_step_3_20250714_172057.png",
+    "screenshots/rippling_test/20250714_171950_step_4_20250714_172122.png",
+    "screenshots/rippling_test/20250714_171950_step_5_20250714_172144.png",
+    "screenshots/rippling_test/20250714_171950_final_20250714_172145.png"
+  ],
+  "filled_fields": {
+    "#field-9": {
+      "value": "Jiajun",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "Jiajun"
+    },
+    "#field-11": {
+      "value": "Huo",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "Huo"
+    },
+    "#field-13": {
+      "value": "jiajunhuo@gmail.com",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "jiajunhuo@gmail.com"
+    },
+    "#field-20": {
+      "value": "+1 (267) 777-8518",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "+1 (267) 777-8518"
+    },
+    "#field-32": {
+      "value": "https://www.linkedin.com/in/nickhuo/",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+    },
+    "#field-34": {
+      "value": "https://github.com/NickHuo",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "https://github.com/NickHuo"
+    },
+    "#field-62": {
+      "value": "Yes",
+      "type": "text",
+      "confidence": 0.95,
+      "attempted_value": "Yes"
+    }
+  },
+  "submitted": false
+}

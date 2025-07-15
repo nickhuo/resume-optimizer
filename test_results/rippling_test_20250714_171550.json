@@ -1,0 +1,322 @@
+{
+  "success": false,
+  "session_id": "20250714_171412",
+  "url": "https://ats.rippling.com/rippling/jobs/203e0cac-0e30-4603-8087-f764e8c3f85c?jobSite=LinkedIn",
+  "job_id": null,
+  "steps": [
+    {
+      "action": "click_cta",
+      "target": "Apply now",
+      "success": true,
+      "details": {
+        "success": true,
+        "navigation_occurred": false,
+        "new_url": null,
+        "error": null
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "#field-62": {
+            "value": "Yes",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Yes"
+          },
+          "#field-27": {
+            "value": "Software Engineer Intern",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Software Engineer Intern"
+          },
+          "#field-15": {
+            "value": "Python, JavaScript, Java, SQL, React, Node.js, Django, Spring Boot, Git, Docker, AWS, MongoDB, Machine Learning, Data Analysis, Agile Development",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Python, JavaScript, Java, SQL, React, Node.js, Django, Spring Boot, Git, Docker, AWS, MongoDB, Machine Learning, Data Analysis, Agile Development"
+          }
+        },
+        "errors": [
+          "Failed to fill input:nth-child(1)"
+        ]
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "input[name=\"custom_question_e15fa851-27b0-4f07-b2e7-ca1feaa91075\"]": {
+            "value": "Yes",
+            "type": "radio",
+            "confidence": 1.0,
+            "attempted_value": "Yes"
+          },
+          "#field-62": {
+            "value": "100000",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "100000"
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "input[name=\"custom_question_e15fa851-27b0-4f07-b2e7-ca1feaa91075\"]": {
+            "value": "Yes",
+            "type": "radio",
+            "confidence": 1.0,
+            "attempted_value": "Yes"
+          },
+          "#field-62": {
+            "value": "100000",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "100000"
+          }
+        },
+        "errors": []
+      }
+    },
+    {
+      "action": "fill_form",
+      "success": true,
+      "details": {
+        "success": true,
+        "filled_fields": {
+          "#field-9": {
+            "value": "Jiajun",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Jiajun"
+          },
+          "#field-11": {
+            "value": "Huo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Huo"
+          },
+          "#field-13": {
+            "value": "jiajunhuo@gmail.com",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "jiajunhuo@gmail.com"
+          },
+          "#field-20": {
+            "value": "+1 (267) 777-8518",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "+1 (267) 777-8518"
+          },
+          "#field-32": {
+            "value": "https://www.linkedin.com/in/nickhuo/",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+          },
+          "#field-34": {
+            "value": "https://github.com/NickHuo",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "https://github.com/NickHuo"
+          },
+          "#field-62": {
+            "value": "Yes",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Yes"
+          },
+          "#field-27": {
+            "value": "Software Engineer Intern",
+            "type": "input",
+            "confidence": 0.95,
+            "attempted_value": "Software Engineer Intern"
+          }
+        },
+        "errors": [
+          "Failed to fill input:nth-child(1)"
+        ]
+      }
+    }
+  ],
+  "error": null,
+  "screenshots": [
+    "screenshots/rippling_test/20250714_171412_initial_20250714_171421.png",
+    "screenshots/rippling_test/20250714_171412_step_1_20250714_171432.png",
+    "screenshots/rippling_test/20250714_171412_step_2_20250714_171454.png",
+    "screenshots/rippling_test/20250714_171412_step_3_20250714_171513.png",
+    "screenshots/rippling_test/20250714_171412_step_4_20250714_171531.png",
+    "screenshots/rippling_test/20250714_171412_step_5_20250714_171548.png",
+    "screenshots/rippling_test/20250714_171412_final_20250714_171549.png"
+  ],
+  "filled_fields": {
+    "#field-9": {
+      "value": "Jiajun",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "Jiajun"
+    },
+    "#field-11": {
+      "value": "Huo",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "Huo"
+    },
+    "#field-13": {
+      "value": "jiajunhuo@gmail.com",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "jiajunhuo@gmail.com"
+    },
+    "#field-20": {
+      "value": "+1 (267) 777-8518",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "+1 (267) 777-8518"
+    },
+    "#field-32": {
+      "value": "https://www.linkedin.com/in/nickhuo/",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "https://www.linkedin.com/in/nickhuo/"
+    },
+    "#field-34": {
+      "value": "https://github.com/NickHuo",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "https://github.com/NickHuo"
+    },
+    "#field-62": {
+      "value": "Yes",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "Yes"
+    },
+    "#field-27": {
+      "value": "Software Engineer Intern",
+      "type": "input",
+      "confidence": 0.95,
+      "attempted_value": "Software Engineer Intern"
+    }
+  },
+  "submitted": false
+}

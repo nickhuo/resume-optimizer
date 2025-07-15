@@ -111,7 +111,10 @@ def build(
         # 7. Compile PDF
         with console.status("Compiling PDF..."):
             compiler = LatexCompiler()
-            output_path = output or Path(f"resume_{jd_model.company.replace(' ', '_')}_{page_id}.pdf")
+            # Format filename as JiajunHuo_{Position_Name}_{CompanyName}_Resume.pdf
+            safe_company = jd_model.company.replace(' ', '_').replace('/', '_').replace('-', '_')
+            safe_title = jd_model.title.replace(' ', '_').replace('/', '_').replace('-', '_')
+            output_path = output or Path(f"JiajunHuo_{safe_title}_{safe_company}_Resume.pdf")
             pdf_path = compiler.compile(tex_path, output_dir=output_path.parent)
             
             # Rename to desired output name
@@ -245,8 +248,9 @@ def build_from_notion(
                     rprint(f"[green]✓[/green] Resume optimized (relevance: {result.relevance_score:.2%})")
                 
                 # Generate output filenames
-                safe_company = jd_model.company.replace(' ', '_').replace('/', '_')
-                base_filename = f"resume_{safe_company}_{job.page_id}"
+                safe_company = jd_model.company.replace(' ', '_').replace('/', '_').replace('-', '_')
+                safe_title = jd_model.title.replace(' ', '_').replace('/', '_').replace('-', '_')
+                base_filename = f"JiajunHuo_{safe_title}_{safe_company}_Resume"
                 
                 # Render LaTeX and compile PDF
                 with console.status(f"Generating PDF for {job.company}..."):

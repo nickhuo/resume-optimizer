@@ -1,0 +1,101 @@
+{
+  "timestamp": "2025-07-14T17:08:18.952710",
+  "fields_tested": [
+    {
+      "field": "First Name",
+      "type": "text",
+      "expected_value": "John",
+      "actual_value": "John",
+      "success": true,
+      "confidence": 0.95,
+      "error": null
+    },
+    {
+      "field": "Email",
+      "type": "email",
+      "expected_value": "john.doe@example.com",
+      "actual_value": "john.doe@example.com",
+      "success": true,
+      "confidence": 0.95,
+      "error": null
+    },
+    {
+      "field": "Country",
+      "type": "select",
+      "expected_value": "United States",
+      "actual_value": "United States",
+      "success": true,
+      "confidence": 1.0,
+      "error": null
+    },
+    {
+      "field": "State/Province",
+      "type": "select",
+      "expected_value": "California",
+      "actual_value": "California",
+      "success": true,
+      "confidence": 1.0,
+      "error": null
+    },
+    {
+      "field": "Education Level",
+      "type": "select",
+      "expected_value": "Bachelor's",
+      "actual_value": "Bachelor's Degree",
+      "success": true,
+      "confidence": 0.9,
+      "error": null
+    },
+    {
+      "field": "Graduation Year",
+      "type": "select",
+      "expected_value": "2020",
+      "actual_value": "2020",
+      "success": true,
+      "confidence": 1.0,
+      "error": null
+    },
+    {
+      "field": "Work Authorization",
+      "type": "radio",
+      "expected_value": "Yes",
+      "actual_value": "Yes",
+      "success": true,
+      "confidence": 1.0,
+      "error": null
+    },
+    {
+      "field": "Gender",
+      "type": "radio",
+      "expected_value": "Male",
+      "actual_value": "Male",
+      "success": true,
+      "confidence": 0.9,
+      "error": null
+    },
+    {
+      "field": "Terms and Conditions",
+      "type": "checkbox",
+      "expected_value": "yes",
+      "actual_value": "Checked",
+      "success": true,
+      "confidence": 0.9,
+      "error": null
+    },
+    {
+      "field": "Newsletter",
+      "type": "checkbox",
+      "expected_value": "no",
+      "actual_value": "Not checked",
+      "success": true,
+      "confidence": 0.9,
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "successful": 10,
+    "failed": 0,
+    "success_rate": "100.0%"
+  }
+}

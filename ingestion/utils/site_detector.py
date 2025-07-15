@@ -16,6 +16,7 @@ class JobSite(Enum):
     INDEED = "indeed"
     GLASSDOOR = "glassdoor"
     ANGELLIST = "angellist"
+    RIPPLING = "rippling"
     UNKNOWN = "unknown"
 
 
@@ -54,6 +55,11 @@ class SiteDetector:
             r"angel\.co",
             r"angellist\.com",
             r"wellfound\.com"  # AngelList rebranded to Wellfound
+        ],
+        JobSite.RIPPLING: [
+            r"ats\.rippling\.com",
+            r"rippling\.com/jobs",
+            r"jobs\.rippling\.com"
         ]
     }
     
@@ -105,6 +111,7 @@ class SiteDetector:
             JobSite.WORKDAY: "WorkdayParser",
             JobSite.LEVER: "LeverParser",
             JobSite.LINKEDIN: "LinkedInParser",
+            JobSite.RIPPLING: "RipplingParser",
             # Add more as implemented
         }
         return parser_map.get(site)
