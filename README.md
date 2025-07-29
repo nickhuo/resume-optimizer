@@ -1,31 +1,34 @@
-# Semi-Apply Job Automation Tool
+# Semi-Apply: Intelligent Job Application Automation
 
-半自動化投遞 Pipeline，支持 2025 年北美 SDE / AI / DS / DE 崗位批量申請。
+A semi-automated job application pipeline for 2025 North American Software Development Engineer (SDE), AI Engineer, Data Science (DS), and Data Engineering (DE) positions.
 
-## 🎯 項目目標
+## 🎯 Project Overview
 
-- **數據統一源**：Notion 數據庫（JD & 投遞記錄）
-- **自動化層**：Playwright 腳本完成 80% 以上表單填充
-- **智能內容層**：通過 OpenAI API 完成 JD⇆簡歷匹配、關鍵詞補全、bullet 重寫
-- **日誌與監控**：所有步驟結果回寫 Notion，並保存截圖或錯誤棧
+Semi-Apply streamlines the job application process by combining intelligent automation with human oversight. The system integrates multiple layers of technology to maximize efficiency while maintaining quality and compliance.
 
-## 🚀 快速開始
+**Key Features:**
+- **Centralized Data Management**: Notion database for job descriptions and application tracking
+- **Intelligent Automation**: Playwright scripts handle 80%+ of form filling automatically
+- **AI-Powered Content**: OpenAI API integration for resume-job matching, keyword optimization, and bullet point customization
+- **Comprehensive Monitoring**: Complete audit trail with Notion logging, screenshots, and error tracking
 
-### 環境要求
+## 🚀 Quick Start
 
-- Python 3.11+
+### Prerequisites
+
+- Python 3.11 or higher
 - Notion API Token
-- OpenAI API Key（後續階段需要）
+- OpenAI API Key (required for Phase 1+)
 
-### 安裝步驟
+### Installation
 
-1. 克隆項目
+1. **Clone the repository**
 ```bash
 git clone https://github.com/yourusername/semi-apply.git
 cd semi-apply
 ```
 
-2. 創建虛擬環境
+2. **Set up virtual environment**
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # macOS/Linux
@@ -33,71 +36,71 @@ source .venv/bin/activate  # macOS/Linux
 .venv\Scripts\activate  # Windows
 ```
 
-3. 安裝依賴
+3. **Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. 配置環境變量
+4. **Configure environment**
 ```bash
 cp .env.example .env
-# 編輯 .env 文件，填入你的 Notion Token 和 Database ID
+# Edit .env file with your Notion Token and Database ID
 ```
 
-### 使用方法
+### Basic Usage
 
-#### 1. 查看配置
+#### View Configuration
 ```bash
 python jobbot.py ingest config
 ```
 
-#### 2. 列出待處理的職位
+#### List Pending Jobs
 ```bash
 python jobbot.py ingest list --status TODO
 ```
 
-#### 3. 檢測職位網站類型
+#### Detect Job Site Type
 ```bash
 python jobbot.py ingest detect "https://boards.greenhouse.io/company/jobs/123456"
 ```
 
-#### 4. 測試所有組件
+#### Test All Components
 ```bash
 python jobbot.py ingest test
 ```
 
-## 📁 項目結構
+## 📁 Project Architecture
 
 ```
 semi-apply/
-├── ingestion/              # 數據採集模塊
-│   ├── cli.py             # CLI 命令
-│   ├── settings.py        # 配置管理
-│   ├── models/            # 數據模型
-│   │   └── job.py         # 職位數據模型
-│   ├── services/          # 服務層
-│   │   └── notion_service.py  # Notion API 封裝
-│   ├── parsers/           # 網站解析器（待實現）
-│   └── utils/             # 工具函數
-│       └── site_detector.py   # 網站檢測器
-├── data/                  # 數據存儲
-│   └── raw/              # 原始 JD JSON 文件
-├── logs/                  # 日誌文件
-├── jobbot.py             # 主 CLI 入口
-├── requirements.txt       # Python 依賴
-└── README.md             # 本文件
+├── ingestion/              # Data collection module
+│   ├── cli.py             # Command-line interface
+│   ├── settings.py        # Configuration management
+│   ├── models/            # Data models
+│   │   └── job.py         # Job data model
+│   ├── services/          # Service layer
+│   │   └── notion_service.py  # Notion API wrapper
+│   ├── parsers/           # Site parsers (planned)
+│   └── utils/             # Utility functions
+│       └── site_detector.py   # Site detection utility
+├── data/                  # Data storage
+│   └── raw/              # Raw job description JSON files
+├── logs/                  # Application logs
+├── jobbot.py             # Main CLI entry point
+├── requirements.txt       # Python dependencies
+└── README.md             # This file
 ```
 
-## 🔧 配置說明
+## ⚙️ Configuration
 
-### Notion 設置
+### Notion Setup
 
-1. 創建 Notion Integration：https://www.notion.so/my-integrations
-2. 獲取 Integration Token
-3. 將 Integration 添加到你的數據庫
-4. 獲取數據庫 ID（在數據庫 URL 中）
+1. **Create Notion Integration**: Visit https://www.notion.so/my-integrations
+2. **Get Integration Token**: Copy the token from your integration
+3. **Share Database**: Add your integration to the target database
+4. **Get Database ID**: Extract from your Notion database URL
 
-### 環境變量
+### Environment Variables
 
 ```env
 # Notion Configuration
@@ -109,60 +112,81 @@ LOG_LEVEL=INFO
 REQUEST_TIMEOUT=10
 ```
 
-## 📊 Notion 數據庫結構
+## 📊 Notion Database Schema
 
-| 字段 | 描述 | 類型 |
-|------|------|------|
-| JD_ID | 崗位在數據庫中的 ID | Number |
-| JD_Link | 職位原始鏈接 | URL |
-| Company | 公司 | Text |
-| Title | 崗位標題 | Text |
-| Status | TODO / Processing / Parsed / Error / Filling / Submitted / Failed | Select |
-| LLM_Notes | LLM 生成的注意事項 | Rich Text |
-| Last_Error | 最近一次錯誤信息 | Rich Text |
-| My_Notes | 個人筆記 | Rich Text |
-| Created_Time | 創建時間 | Date |
+| Field | Description | Type |
+|-------|-------------|------|
+| JD_ID | Unique job identifier in database | Number |
+| JD_Link | Original job posting URL | URL |
+| Company | Company name | Text |
+| Title | Job title | Text |
+| Status | Application status (TODO/Processing/Parsed/Error/Filling/Submitted/Failed) | Select |
+| LLM_Notes | AI-generated insights and recommendations | Rich Text |
+| Last_Error | Most recent error message | Rich Text |
+| My_Notes | Personal notes and observations | Rich Text |
+| Created_Time | Record creation timestamp | Date |
 
-## 🛠️ 開發路線圖
+## 🛠️ Development Roadmap
 
-### Phase 0: 環境搭建 ✅
-- [x] 配置管理 (settings.py)
-- [x] Notion SDK 封裝
-- [x] CLI 基礎框架
-- [x] 站點檢測器
+### Phase 0: Foundation ✅
+- [x] Configuration management (settings.py)
+- [x] Notion SDK integration
+- [x] CLI framework
+- [x] Site detection utility
 
-### Phase 1: 內容智能 MVP 🚧
-- [ ] JD 解析器 (Greenhouse, Workday)
-- [ ] GPT 服務集成
-- [ ] 簡歷模板渲染
-- [ ] PDF 生成
+### Phase 1: Content Intelligence MVP 🚧
+- [ ] Job description parsers (Greenhouse, Workday)
+- [ ] GPT service integration
+- [ ] Resume template rendering
+- [ ] PDF generation pipeline
 
-### Phase 2: Playwright 填表 📋
-- [ ] 自動填表框架
-- [ ] Selector 映射配置
-- [ ] Fallback 鏈實現
+### Phase 2: Automated Form Filling 📋
+- [ ] Playwright automation framework
+- [ ] CSS selector mapping configuration
+- [ ] Fallback chain implementation
+- [ ] Cross-platform browser support
 
-### Phase 3: 穩定性與通知 🔔
-- [ ] LLM selector 自愈
-- [ ] 異常截圖與通知
-- [ ] CI/CD 集成
+### Phase 3: Reliability & Notifications 🔔
+- [ ] LLM-powered selector self-healing
+- [ ] Exception handling with screenshots
+- [ ] Notification system integration
+- [ ] CI/CD pipeline setup
 
-## 🤝 貢獻指南
+## 🔒 Compliance & Ethics
 
-1. Fork 項目
-2. 創建功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 開啟 Pull Request
+**Important**: This tool is designed for educational and personal use only. Users must:
+- Respect all job site terms of service
+- Maintain reasonable application rates
+- Provide accurate information in all applications
+- Follow applicable employment laws and regulations
 
-## 📄 許可證
+## 🤝 Contributing
 
-MIT License - 詳見 [LICENSE](LICENSE) 文件
+We welcome contributions to improve Semi-Apply! Please follow these steps:
 
-## 👨‍💻 作者
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
-Nick Huo
+### Development Guidelines
+
+- Follow PEP 8 style guidelines
+- Add tests for new functionality
+- Update documentation as needed
+- Ensure compatibility with Python 3.11+
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Nick Huo**
+
+For questions, suggestions, or collaboration opportunities, please open an issue or reach out directly.
 
 ---
 
-**注意**：本工具僅供學習和個人使用，請遵守各招聘網站的使用條款。
+**Disclaimer**: This tool is for educational and personal use only. Please respect all job site terms of service and applicable laws when using this software.

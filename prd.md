@@ -135,7 +135,6 @@ jobbot batch --limit 10
 | 组件         | 版本锁定     | 说明                               |
 | ---------- | -------- | -------------------------------- |
 | Python     | 3.11 LTS | 统一解释器                            |
-| Playwright | 1.44+    | 安装 `playwright install chromium` |
 | OpenAI SDK | 1.x      | GPT-4o / GPT-4o-mini             |
 | Jinja2     | 3.x      | LaTeX 模板渲染                       |
 | Notion SDK | 0.14+    | 官方客户端                            |
